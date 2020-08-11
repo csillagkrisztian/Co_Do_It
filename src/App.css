@@ -1,0 +1,9 @@
+@import "./components/CodePlayground/CodePlayground.css";
+
+.App {
+  background-color: #f49f0a;
+}
+
+.color-nav {
+  background-color: #373f51;
+}
