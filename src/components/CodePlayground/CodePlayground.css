@@ -10,3 +10,7 @@
 .code-editor {
   background-color: #00a6a6;
 }
+
+.example {
+  border: #00a6a6 solid 5px;
+}
