@@ -24,11 +24,16 @@ export default function CodePlayground() {
   const exercise = useSelector(selectExercise);
   const messages = useSelector(selectMessages);
   console.log(messages);
-  console.log(exercise);
 
   useEffect(() => {
     dispatch(getRandomExercise());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (exercise) {
+      set_testCase(exercise.testCases[0]);
+    }
+  }, [exercise]);
 
   const codeMirrorOptions = {
     theme: "material",
@@ -39,10 +44,14 @@ export default function CodePlayground() {
 
   const [code, set_code] = useState(`// write here 
   `);
+  const [testCase, set_testCase] = useState("");
+
+  console.log(testCase);
 
   const runCode = (testCase, id) => {
     let submits = [];
     const givenValues = testCase.given;
+    console.log(givenValues);
     const codeToRun = `
 const console = {log(arg) {submits=[...submits,arg];}};
 const document = null;
@@ -71,7 +80,13 @@ ${code}
     });
   };
 
-  return !exercise.description ? (
+  const checker = messages && messages.map((m) => m[0] === "P");
+  if (checker.length > 0 && checker.every((check) => check === true)) {
+    console.log(checker);
+    console.log("You got it!");
+  }
+
+  return !exercise ? (
     <Loading />
   ) : (
     <div className="container-fluid">
@@ -90,10 +105,21 @@ ${code}
           </div>
         </div>
         <div className="col-sm-7 code-editor">
-          <div className="editor-header">Given code</div>
+          <div className="editor-header">
+            Given code{" "}
+            <select
+              onChange={(e) => {
+                set_testCase(exercise.testCases[e.target.selectedIndex]);
+              }}
+            >
+              {exercise.testCases.map((tc, id) => {
+                return <option key={id + 1}>{`Test Case ${id + 1}`}</option>;
+              })}
+            </select>
+          </div>
           <CodeMirror
             className="code-text-editor"
-            value={exercise.testCases[0].given}
+            value={testCase.given}
             options={{
               mode: "javascript",
               ...codeMirrorOptions,
@@ -123,7 +149,7 @@ ${code}
           <button
             onClick={() => {
               dispatch(deleteStatuses());
-              runCode(exercise.testCases[0], 0);
+              runCode(testCase, exercise.testCases.indexOf(testCase));
             }}
           >
             Run this test case

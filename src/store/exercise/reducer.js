@@ -1,5 +1,5 @@
 const initialState = {
-  exercise: {},
+  exercise: null,
   status: {
     messages: [],
     isDone: false,
