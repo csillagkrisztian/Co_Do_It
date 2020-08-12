@@ -8,22 +8,23 @@ import "codemirror/addon/hint/javascript-hint";
 import React, { useState, useEffect } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { equal } from "../equal";
-import { useDispatch } from "react-redux";
-import { getRandomExercise } from "../../store/exercise/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getRandomExercise,
+  sendMistakeStatus,
+  sendErrorStatus,
+  sendSuccessStatus,
+  deleteStatuses,
+} from "../../store/exercise/actions";
+import { selectExercise, selectMessages } from "../../store/exercise/selectors";
+import Loading from "../Loading";
 
 export default function CodePlayground() {
-  const exercise = {
-    id: 1,
-    description: "Figure out the pattern! ",
-    explanation:
-      "Write a function and/or just log it on the console so that if we use these variables we get the expected result:",
-    pattern: [
-      { given: "const a = 5; const b = 5;", result: "[10]" },
-      { given: "const a = 12; const b = 52;", result: "[64]" },
-    ],
-  };
-
   const dispatch = useDispatch();
+  const exercise = useSelector(selectExercise);
+  const messages = useSelector(selectMessages);
+  console.log(messages);
+  console.log(exercise);
 
   useEffect(() => {
     dispatch(getRandomExercise());
@@ -38,16 +39,10 @@ export default function CodePlayground() {
 
   const [code, set_code] = useState(`// write here 
   `);
-  const [evalState, setEvalState] = useState({
-    status: "idle",
-    messages: [],
-  });
 
-  console.log(evalState);
-
-  const runCode = (pattern, id) => {
+  const runCode = (testCase, id) => {
     let submits = [];
-    const givenValues = pattern.given;
+    const givenValues = testCase.given;
     const codeToRun = `
 const console = {log(arg) {submits=[...submits,arg];}};
 const document = null;
@@ -59,38 +54,33 @@ ${code}
 
     try {
       eval(codeToRun);
-      if (!equal(submits, JSON.parse(pattern.result))) {
-        setEvalState({
-          status: "error",
-        });
+      if (!equal(submits, JSON.parse(testCase.result))) {
+        dispatch(sendMistakeStatus(submits, JSON.parse(testCase.result)));
       } else {
-        setEvalState({
-          status: "success",
-        });
+        dispatch(sendSuccessStatus(id + 1));
       }
     } catch (error) {
       console.log(error);
-      setEvalState({
-        status: "error",
-        error: [`error occured : ${error.message}`],
-      });
+      dispatch(sendErrorStatus(error));
     }
   };
 
   const runAllCases = () => {
-    exercise.pattern.forEach((p, id) => {
-      runCode(p, id);
+    exercise.testCases.forEach((testCase, id) => {
+      runCode(testCase, id);
     });
   };
 
-  return (
-    <div className="container-fluid" style={{ height: "100vh" }}>
+  return !exercise.description ? (
+    <Loading />
+  ) : (
+    <div className="container-fluid">
       <div className="row editor-row">
         <div className="col-sm">
           <h3>{exercise.description}</h3>
           <h5>{exercise.explanation}</h5>
           <div className="example">
-            {exercise.pattern.map((p, id) => {
+            {exercise.testCases.map((p, id) => {
               return (
                 <p key={id + 1}>
                   {p.given} the result should be {"=>"} {p.result}
@@ -103,7 +93,7 @@ ${code}
           <div className="editor-header">Given code</div>
           <CodeMirror
             className="code-text-editor"
-            value={exercise.pattern[0].given}
+            value={exercise.testCases[0].given}
             options={{
               mode: "javascript",
               ...codeMirrorOptions,
@@ -117,15 +107,14 @@ ${code}
               mode: "javascript",
               ...codeMirrorOptions,
             }}
-            onKeyPress={(editor, event) => {
-              editor.showHint();
-            }}
+            onKeyPress={(editor, event) => {}}
             onBeforeChange={(editor, data, js) => {
               set_code(js);
             }}
           />
           <button
             onClick={() => {
+              dispatch(deleteStatuses());
               runAllCases();
             }}
           >
@@ -133,7 +122,8 @@ ${code}
           </button>
           <button
             onClick={() => {
-              runCode(exercise.pattern[0], 0);
+              dispatch(deleteStatuses());
+              runCode(exercise.testCases[0], 0);
             }}
           >
             Run this test case
@@ -142,7 +132,12 @@ ${code}
       </div>
       <div className="row">
         <div className="col-sm"></div>
-        <div className="col-sm"></div>
+        <div className="col-sm">
+          {messages.length !== 0 &&
+            messages.map((m, id) => {
+              return <p key={id}>{m}</p>;
+            })}
+        </div>
       </div>
     </div>
   );
