@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
+import { equal } from "../equal";
 
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/javascript/javascript";
@@ -15,8 +16,8 @@ export default function CodePlayground() {
     explanation:
       "Write a function and/or just log it on the console so that if we use these variables we get the expected result:",
     pattern: [
-      { given: "const a = 5; const b = 5;", result: [10] },
-      { given: "const a = 12; const b = 52;", result: [64] },
+      { given: "const a = 5; const b = 5;", result: "[10]" },
+      { given: "const a = 12; const b = 52;", result: "[64]" },
     ],
   };
 
@@ -31,17 +32,16 @@ export default function CodePlayground() {
   `);
   const [evalState, setEvalState] = useState({
     status: "idle",
+    messages: [],
   });
 
   console.log(evalState);
 
-  let submits = [];
-  let messages = [];
-
   const runCode = (pattern, id) => {
+    let submits = [];
     const givenValues = pattern.given;
     const codeToRun = `
-const console = {log(arg) {submits=[arg];}};
+const console = {log(arg) {submits=[...submits,arg];}};
 const document = null;
 const location = null;
 const window = null;
@@ -51,43 +51,32 @@ ${code}
 
     try {
       eval(codeToRun);
-      if (JSON.stringify(submits) !== JSON.stringify(pattern.result)) {
-        messages.push(
-          `We expected the result of test ${id + 1} to be: ${
-            pattern.result
-          }, but instead it was: ${submits}`
-        );
+      if (!equal(submits, JSON.parse(pattern.result))) {
         setEvalState({
           status: "error",
-          submits: submits,
-          messages,
         });
       } else {
         setEvalState({
           status: "success",
-          messages,
         });
       }
     } catch (error) {
       console.log(error);
       setEvalState({
         status: "error",
-        submits: submits,
-        error: error.message,
+        error: [`error occured : ${error.message}`],
       });
     }
   };
 
   const runAllCases = () => {
-    // Compares the evaluated code with the result
-
     exercise.pattern.forEach((p, id) => {
       runCode(p, id);
     });
   };
 
   return (
-    <div className="container page">
+    <div className="container-fluid" style={{ height: "100vh" }}>
       <div className="row editor-row">
         <div className="col-sm">
           <h3>{exercise.description}</h3>
@@ -120,7 +109,9 @@ ${code}
               mode: "javascript",
               ...codeMirrorOptions,
             }}
-            onKeyPress={(editor, event) => {}}
+            onKeyPress={(editor, event) => {
+              editor.showHint();
+            }}
             onBeforeChange={(editor, data, js) => {
               set_code(js);
             }}
@@ -134,7 +125,7 @@ ${code}
           </button>
           <button
             onClick={() => {
-              runCode(exercise.pattern[1], 2);
+              runCode(exercise.pattern[0], 0);
             }}
           >
             Run this test case
