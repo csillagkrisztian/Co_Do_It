@@ -55,3 +55,15 @@ export const deleteStatuses = () => {
     type: "DELETE_STATUSES",
   };
 };
+
+export const exerciseCompleted = () => {
+  return {
+    type: "COMPLETED_EXERCISE",
+  };
+};
+
+export const resetState = () => {
+  return {
+    type: "RESET_STATE",
+  };
+};

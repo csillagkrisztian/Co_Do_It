@@ -5,3 +5,7 @@ export const selectExercise = (state) => {
 export const selectMessages = (state) => {
   return state.exercise.status.messages;
 };
+
+export const selectIsDone = (state) => {
+  return state.exercise.status.isDone;
+};
