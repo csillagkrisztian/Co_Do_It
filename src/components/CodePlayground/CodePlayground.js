@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Controlled as CodeMirror } from "react-codemirror2";
-import { equal } from "../equal";
-
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/theme/material.css";
 import "codemirror/addon/hint/show-hint";
 import "codemirror/addon/hint/show-hint.css";
 import "codemirror/addon/hint/javascript-hint";
+
+import React, { useState, useEffect } from "react";
+import { Controlled as CodeMirror } from "react-codemirror2";
+import { equal } from "../equal";
+import { useDispatch } from "react-redux";
+import { getRandomExercise } from "../../store/exercise/actions";
 
 export default function CodePlayground() {
   const exercise = {
@@ -20,6 +22,12 @@ export default function CodePlayground() {
       { given: "const a = 12; const b = 52;", result: "[64]" },
     ],
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRandomExercise());
+  }, [dispatch]);
 
   const codeMirrorOptions = {
     theme: "material",
