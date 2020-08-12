@@ -15,12 +15,19 @@ import {
   sendErrorStatus,
   sendSuccessStatus,
   deleteStatuses,
+  exerciseCompleted,
+  resetState,
 } from "../../store/exercise/actions";
-import { selectExercise, selectMessages } from "../../store/exercise/selectors";
+import {
+  selectExercise,
+  selectMessages,
+  selectIsDone,
+} from "../../store/exercise/selectors";
 import Loading from "../Loading";
 
 export default function CodePlayground() {
   const dispatch = useDispatch();
+  const isDone = useSelector(selectIsDone);
   const exercise = useSelector(selectExercise);
   const messages = useSelector(selectMessages);
   console.log(messages);
@@ -42,8 +49,10 @@ export default function CodePlayground() {
     lineWrapping: true,
   };
 
-  const [code, set_code] = useState(`// write here 
-  `);
+  const initialState = `// write here 
+  `;
+
+  const [code, set_code] = useState(initialState);
   const [testCase, set_testCase] = useState("");
 
   console.log(testCase);
@@ -82,8 +91,7 @@ ${code}
 
   const checker = messages && messages.map((m) => m[0] === "P");
   if (checker.length > 0 && checker.every((check) => check === true)) {
-    console.log(checker);
-    console.log("You got it!");
+    dispatch(exerciseCompleted());
   }
 
   return !exercise ? (
@@ -157,7 +165,22 @@ ${code}
         </div>
       </div>
       <div className="row">
-        <div className="col-sm"></div>
+        <div className="col-sm">
+          {isDone && (
+            <p>
+              Congratulations! You passed all the tests!
+              <button
+                onClick={() => {
+                  set_code(initialState);
+                  dispatch(resetState());
+                  dispatch(getRandomExercise());
+                }}
+              >
+                Click here for a new challenge!
+              </button>
+            </p>
+          )}
+        </div>
         <div className="col-sm">
           {messages.length !== 0 &&
             messages.map((m, id) => {

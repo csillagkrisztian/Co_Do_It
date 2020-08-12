@@ -8,6 +8,10 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case "RESET_STATE": {
+      return initialState;
+    }
+
     case "SEND_STATUS": {
       return {
         ...state,
@@ -28,8 +32,18 @@ export default (state = initialState, { type, payload }) => {
       };
     }
 
+    case "COMPLETED_EXERCISE": {
+      return {
+        ...state,
+        status: { ...state.status, isDone: true },
+      };
+    }
+
     case "LOAD_EXERCISE": {
-      return { ...state, exercise: payload };
+      return {
+        ...state,
+        exercise: payload,
+      };
     }
     default:
       return state;
