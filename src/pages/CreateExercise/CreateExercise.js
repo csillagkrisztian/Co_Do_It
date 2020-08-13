@@ -43,7 +43,7 @@ export default function CreateExercise() {
               />
             </Form.Group>
 
-            <Form.Label>Do you want to make this public?</Form.Label>
+            <Form.Label>Do you want to make this exercise public?</Form.Label>
             <Form.Control
               value={isPublic}
               onChange={(event) => setIsPublic(!isPublic)}
@@ -51,9 +51,10 @@ export default function CreateExercise() {
               placeholder="isTeacher"
               required
             />
+            <br></br>
             <Form.Text className="text">
               Others will have a chance to play your exercise! Every
-              contribution helps!
+              contribution helps us grow!
             </Form.Text>
           </Form.Group>
           <Form.Group>

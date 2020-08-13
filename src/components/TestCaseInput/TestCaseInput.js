@@ -12,6 +12,7 @@ export default function TestCaseInput(props) {
       <br></br>
       <h3>Test case {props.id}</h3>
       <Form.Label>Given Variables</Form.Label>
+
       <Form.Control
         as={"textarea"}
         rows={3}
@@ -21,7 +22,13 @@ export default function TestCaseInput(props) {
         placeholder="Enter an exercise"
         required
       />
+      <Form.Text className="text">
+        Please put the variables on a separate line with a semicolon (";") at
+        the end!
+      </Form.Text>
+      <br></br>
       <Form.Label>Expected Result</Form.Label>
+
       <Form.Control
         value={result}
         onChange={(event) => setResult(event.target.value)}
@@ -29,20 +36,21 @@ export default function TestCaseInput(props) {
         placeholder="Enter a result"
         required
       />
+      <Form.Text className="text">Please put the result in an array!</Form.Text>
       {!ready ? (
         <Button
           disabled={!given || !result}
           className="mt-3 mb-2"
           onClick={() => {
             try {
-              const stuff = given.split("\n");
-              console.log("stuff", stuff);
-              const check = stuff.filter((things) => {
+              const splitGiven = given.split("\n");
+              console.log("stuff", splitGiven);
+              const validGivens = splitGiven.filter((things) => {
                 return things[things.length - 1] === ";";
               });
-              console.log("check", check);
+              console.log("check", validGivens);
               console.log();
-              if (stuff.length > check.length) {
+              if (splitGiven.length > validGivens.length) {
                 setGivenError(true);
               } else {
                 eval(`
