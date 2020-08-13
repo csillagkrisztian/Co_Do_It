@@ -1,5 +1,5 @@
 @import "./components/CodePlayground/CodePlayground.css";
-
+@import "./pages/SignUp/SignUp.css";
 .App {
   background-color: #f49f0a;
   height: 100vh;
