@@ -57,30 +57,38 @@ export default function CreateExercise() {
             </Form.Text>
           </Form.Group>
           <Form.Group>
-            <Button variant="primary" type="submit" onClick={submitForm}>
-              Sign up
+            <Button
+              style={{ marginLeft: "33%" }}
+              variant="primary"
+              type="submit"
+              onClick={() => {
+                console.log({ description, explanation, isPublic });
+              }}
+            >
+              Submit Exercise
             </Button>
           </Form.Group>
         </Form>
+        <Col></Col>
         <Form as={Col} md={{ span: 5 }} className="mt-5">
           <Form.Group>
-            <Button
-              style={{ marginLeft: "50%" }}
-              onClick={() => {
-                setPressedCount(pressedCount + 1);
-                setInputList(
-                  inputList.concat(
-                    <TestCaseInput key={pressedCount} id={pressedCount + 1} />
-                  )
-                );
-              }}
-            >
-              Add a Test Case
-            </Button>
             <TestCaseInput id={1} />
             <TestCaseInput id={2} />
             {inputList}
           </Form.Group>
+          <Button
+            style={{ marginLeft: "33%", marginTop: "2rem" }}
+            onClick={() => {
+              setPressedCount(pressedCount + 1);
+              setInputList(
+                inputList.concat(
+                  <TestCaseInput key={pressedCount} id={pressedCount + 1} />
+                )
+              );
+            }}
+          >
+            Add a Test Case
+          </Button>
         </Form>
       </Row>
     </Container>
