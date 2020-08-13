@@ -11,7 +11,7 @@ export default function LoggedIn() {
   const user = useSelector(selectUser);
   return (
     <>
-      {(user.title === "teacher" || "admin") && (
+      {user.accountType === ("teacher" || "admin") && (
         <NavbarItem path="/create" linkText="Create Exercise" />
       )}
       <Nav.Item style={{ color: "white", padding: ".5rem 1rem" }}>
