@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Col, Button, Row } from "react-bootstrap";
 import TestCaseInput from "../../components/TestCaseInput/TestCaseInput";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addExerciseDetails,
+  resetExerciseToBe,
+  createExercise,
+} from "../../store/exerciseToBe/actions";
+import { selectTestCases } from "../../store/exerciseToBe/selectors";
 
 export default function CreateExercise() {
   const [description, setDescription] = useState("");
@@ -11,8 +18,12 @@ export default function CreateExercise() {
 
   const [isPublic, setIsPublic] = useState(false);
 
-  console.log(inputList);
-  console.log(pressedCount);
+  const dispatch = useDispatch();
+  const testCases = useSelector(selectTestCases);
+
+  useEffect(() => {
+    dispatch(resetExerciseToBe);
+  }, []);
 
   return (
     <Container>
@@ -58,16 +69,22 @@ export default function CreateExercise() {
             </Form.Text>
           </Form.Group>
           <Form.Group>
-            <Button
-              style={{ marginLeft: "33%" }}
-              variant="primary"
-              type="submit"
-              onClick={() => {
-                console.log({ description, explanation, isPublic });
-              }}
-            >
-              Submit Exercise
-            </Button>
+            {testCases.length >= 2 && description && explanation && (
+              <Button
+                style={{ marginLeft: "33%" }}
+                variant="primary"
+                type="submit"
+                onClick={() => {
+                  dispatch(
+                    addExerciseDetails(description, explanation, isPublic)
+                  );
+                  dispatch(createExercise());
+                  dispatch(resetExerciseToBe);
+                }}
+              >
+                Submit Exercise
+              </Button>
+            )}
           </Form.Group>
         </Form>
         <Col></Col>

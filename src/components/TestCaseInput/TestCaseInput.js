@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { addTestCase } from "../../store/exerciseToBe/actions";
 
 export default function TestCaseInput(props) {
   const [given, setGiven] = useState("");
   const [result, setResult] = useState("");
   const [givenError, setGivenError] = useState(false);
   const [resultError, setResultError] = useState(false);
+  const [checked, setChecked] = useState(false);
   const [ready, setReady] = useState(false);
+
+  const dispatch = useDispatch();
+
   return (
     <>
-      <br></br>
       <h3>Test case {props.id}</h3>
       <Form.Label>Given Variables</Form.Label>
 
@@ -43,15 +48,13 @@ export default function TestCaseInput(props) {
           className="mt-3 mb-2"
           onClick={() => {
             try {
-              const splitGiven = given.split("\n");
-              console.log("stuff", splitGiven);
-              const validGivens = splitGiven.filter((things) => {
+              const splitGivens = given.split("\n");
+              const validGivens = splitGivens.filter((things) => {
                 return things[things.length - 1] === ";";
               });
-              console.log("check", validGivens);
-              console.log();
-              if (splitGiven.length > validGivens.length) {
+              if (splitGivens.length > validGivens.length) {
                 setGivenError(true);
+                return;
               } else {
                 eval(`
                 const console = null;
@@ -63,26 +66,41 @@ export default function TestCaseInput(props) {
               }
             } catch (error) {
               setGivenError(true);
+              return;
             }
             try {
-              const hey = JSON.parse(`${result}`);
-              if (Array.isArray(hey)) {
-                console.log("it's an array");
+              const parsedResult = JSON.parse(`${result}`);
+              if (Array.isArray(parsedResult)) {
                 setResultError(false);
               }
-              console.log({ given, result });
             } catch (error) {
               setResultError(true);
+              return;
             }
-
-            setReady(true);
+            setChecked(true);
           }}
         >
           Check Test Case
         </Button>
       ) : (
-        <Form.Text className="text">Ready!</Form.Text>
+        <p>Ready!</p>
       )}
+
+      {checked && !resultError && !givenError && given && result && !ready && (
+        <>
+          <Button
+            className="mt-3 mb-2"
+            onClick={() => {
+              dispatch(addTestCase(given, result));
+              setReady(true);
+            }}
+          >
+            Add Test Case
+          </Button>
+          <p>Your testcase looks good! Press the "Add Test Case" button! </p>
+        </>
+      )}
+
       <br></br>
       {givenError &&
         "Are you sure those are valid variables? It needs a ';' at the end!"}
