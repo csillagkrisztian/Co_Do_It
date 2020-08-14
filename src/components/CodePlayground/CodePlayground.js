@@ -89,7 +89,7 @@ ${code}
     });
   };
 
-  const checker = messages && messages.map((m) => m[0] === "P");
+  const checker = messages.length > 1 && messages.map((m) => m[0] === "P");
   if (checker.length > 0 && checker.every((check) => check === true)) {
     dispatch(exerciseCompleted());
   }
