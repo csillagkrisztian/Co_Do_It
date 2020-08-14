@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "codemirror": "^5.56.0",
+    "js-beautify": "^1.11.0",
     "pusher-js": "^7.0.0",
     "pushid": "^1.0.0",
     "react": "^16.13.0",

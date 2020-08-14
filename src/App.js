@@ -13,9 +13,7 @@ import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 import { Jumbotron } from "react-bootstrap";
 import Playground from "./pages/Playground/PlaygroundPage";
-import "codemirror/lib/codemirror.css";
-import "codemirror/mode/javascript/javascript";
-import "codemirror/theme/material.css";
+import CreateExercise from "./pages/CreateExercise/CreateExercise";
 
 const Home = () => (
   <Jumbotron>
@@ -39,6 +37,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/playground" component={Playground} />
+        <Route path="/create" component={CreateExercise} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
       </Switch>
