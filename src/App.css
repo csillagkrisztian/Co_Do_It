@@ -2,7 +2,8 @@
 @import "./pages/SignUp/SignUp.css";
 .App {
   background-color: #f49f0a;
-  height: 100vh;
+  height: 100%;
+  overflow: auto;
 }
 
 .color-nav {
