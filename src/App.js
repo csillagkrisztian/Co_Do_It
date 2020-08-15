@@ -15,11 +15,27 @@ import { Jumbotron } from "react-bootstrap";
 import Playground from "./pages/Playground/PlaygroundPage";
 import CreateExercise from "./pages/CreateExercise/CreateExercise";
 
-const Home = () => (
-  <Jumbotron>
-    <h1>Home</h1>
-  </Jumbotron>
-);
+import io from "socket.io-client";
+import { selectUser } from "./store/user/selectors";
+let socket;
+const SERVERLINK = "localhost:4000";
+
+const Home = () => {
+  const user = useSelector(selectUser);
+  useEffect(() => {
+    socket = io(SERVERLINK);
+    socket.emit("joined", user);
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
+  }, [SERVERLINK, user]);
+  return (
+    <Jumbotron>
+      <h1>Home</h1>
+    </Jumbotron>
+  );
+};
 
 function App() {
   const dispatch = useDispatch();
