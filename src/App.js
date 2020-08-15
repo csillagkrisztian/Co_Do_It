@@ -17,6 +17,7 @@ import CreateExercise from "./pages/CreateExercise/CreateExercise";
 
 import io from "socket.io-client";
 import { selectUser } from "./store/user/selectors";
+import Classroom from "./pages/Classroom/Classroom";
 let socket;
 const SERVERLINK = "localhost:4000";
 
@@ -52,6 +53,7 @@ function App() {
       {isLoading ? <Loading /> : null}
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/classroom/:id" component={Classroom} />
         <Route path="/playground" component={Playground} />
         <Route path="/create" component={CreateExercise} />
         <Route path="/signup" component={SignUp} />

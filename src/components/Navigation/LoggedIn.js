@@ -12,7 +12,10 @@ export default function LoggedIn() {
   return (
     <>
       {user.accountType === ("teacher" || "admin") && (
-        <NavbarItem path="/create" linkText="Create Exercise" />
+        <>
+          <NavbarItem path="/create" linkText="Create Exercise" />
+          <NavbarItem path={`/classroom/${user.name}`} linkText="Classroom" />
+        </>
       )}
       <Nav.Item style={{ color: "white", padding: ".5rem 1rem" }}>
         {user.name}
