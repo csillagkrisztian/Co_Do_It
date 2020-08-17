@@ -40,13 +40,9 @@ export const createExercise = () => {
     dispatch(appLoading());
 
     try {
-      const response = await axios.post(
-        `${apiUrl}/exercises/create`,
-        exerciseToBe,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.post(`${apiUrl}/exercises/create`, exerciseToBe, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       dispatch(showMessageWithTimeout("success", true, "exercise created"));
       dispatch(appDoneLoading());

@@ -1,11 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
-import {
-  appLoading,
-  appDoneLoading,
-  showMessageWithTimeout,
-  setMessage,
-} from "../appState/actions";
+import { appLoading, appDoneLoading, setMessage } from "../appState/actions";
 
 export const getRandomExercise = () => async (dispatch, getState) => {
   try {

@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/user/selectors";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
-const SERVERLINK = "localhost:4000";
-
-let socket;
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");

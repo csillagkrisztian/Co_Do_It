@@ -14,26 +14,12 @@ import { getUserWithStoredToken } from "./store/user/actions";
 import Playground from "./pages/Playground/PlaygroundPage";
 import CreateExercise from "./pages/CreateExercise/CreateExercise";
 
-import io from "socket.io-client";
-import { selectUser } from "./store/user/selectors";
 import Classroom from "./pages/Classroom/Classroom";
 import HomePage from "./pages/HomePage/HomePage";
-import { apiUrl } from "./config/constants";
-
-let socket;
 
 function App() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAppLoading);
-  const user = useSelector(selectUser);
-  /* useEffect(() => {
-    socket = io(apiUrl);
-    socket.emit("joined", { user: user.name, room: user.id });
-    return () => {
-      socket.emit("disconnect");
-      socket.off();
-    };
-  }, [user]);*/
 
   useEffect(() => {
     dispatch(getUserWithStoredToken());

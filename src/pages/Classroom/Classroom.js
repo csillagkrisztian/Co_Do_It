@@ -11,6 +11,7 @@ import { setNewExercise } from "../../store/exercise/actions";
 
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { selectExercise } from "../../store/exercise/selectors";
+import ClassroomTable from "../../components/ClassroomTable/ClassroomTable";
 let socket;
 
 export default function Classroom() {
@@ -26,6 +27,14 @@ export default function Classroom() {
 
   socket = io(apiUrl);
 
+  const setSuccess = () => {
+    console.log(` ${user.name} is done`);
+  };
+
+  const setTeacherExample = () => {
+    console.log(`Teachers solution`);
+  };
+
   const userObject = {
     id: user.id,
     name: user.name,
@@ -34,6 +43,9 @@ export default function Classroom() {
 
   useEffect(() => {
     dispatch(getAllExercises());
+    if (user.accountType === "teacher") {
+      socket.emit("delete previous room", userObject.room);
+    }
   }, []);
 
   useEffect(() => {
@@ -44,7 +56,7 @@ export default function Classroom() {
       dispatch(setNewExercise(exercise));
       setSelected(true);
     });
-    if (!selected) {
+    if (!specificExercise) {
       socket.emit("i want exercise", userObject.room);
     }
   });
@@ -61,63 +73,65 @@ export default function Classroom() {
     };
   }, [user]);
 
-  return (
-    <Container fluid>
-      <Row className="justify-content-md-center">
-        <h1 className="mt-2">{`The Classroom of ${params.name}`}</h1>
-      </Row>
-      <Row>
-        <Col className="col-2">
-          {roomMembers.map((member, id) => (
-            <p key={id}>{member.name}</p>
-          ))}
-        </Col>
-        <Col>
-          {!selected ? (
-            <Table bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th>id</th>
-                  <th>Exercise</th>
-                  <th style={{ width: "8rem" }}>created by</th>
-                </tr>
-              </thead>
-              <tbody>
-                {exercises.length
-                  ? exercises.map((ex, id) => {
-                      return (
-                        <tr
-                          onClick={() => {
-                            dispatch(setNewExercise(ex));
-                            setSelected(true);
-                            socket.emit("add exercise", {
-                              id: userObject.id,
-                              exercise: ex,
-                              room: userObject.room,
-                            });
-                          }}
-                          key={id + 1}
-                        >
-                          <td>{ex.id}</td>
-                          <td>{ex.description}</td>
-                          <td>
-                            {ex.userId === 1
-                              ? "admin"
-                              : ex.userId === user.id
-                              ? "you"
-                              : "teacher"}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  : null}
-              </tbody>
-            </Table>
-          ) : (
-            <CodePlayground />
-          )}
-        </Col>
-      </Row>
-    </Container>
-  );
+  switch (user.accountType) {
+    case "teacher": {
+      return (
+        <Container fluid>
+          <Row className="justify-content-center">
+            <h2 className="mt-2">{`Welcome ${params.name}! Ready to teach?`}</h2>
+          </Row>
+          <Row>
+            <Col className="col-2">
+              {roomMembers.map((member, id) => (
+                <p key={id}>{member.name}</p>
+              ))}
+            </Col>
+            <Col>
+              {!selected ? (
+                <ClassroomTable
+                  exercises={exercises}
+                  socket={socket}
+                  id={user.id}
+                  room={userObject.room}
+                  setSelected={setSelected}
+                  user={user}
+                />
+              ) : (
+                <CodePlayground neededFunction={setTeacherExample} />
+              )}
+            </Col>
+          </Row>
+        </Container>
+      );
+    }
+    case "student": {
+      return (
+        <Container fluid>
+          <Row className="justify-content-md-center">
+            <h1 className="mt-2">{`The Classroom of ${params.name}`}</h1>
+          </Row>
+          <Row>
+            <Col className="col-2">
+              {roomMembers.map((member, id) => (
+                <p key={id}>{member.name}</p>
+              ))}
+            </Col>
+            <Col>
+              {!selected ? (
+                <p style={{ textAlign: "center" }}>
+                  Your teacher is selecting material... Is this what exitement
+                  is like?
+                </p>
+              ) : (
+                <CodePlayground neededFunction={setSuccess} />
+              )}
+            </Col>
+          </Row>
+        </Container>
+      );
+    }
+    default: {
+      return <h1>Log in to join a classroom</h1>;
+    }
+  }
 }
