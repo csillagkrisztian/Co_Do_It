@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { useParams, Link } from "react-router-dom";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { apiUrl } from "../../config/constants";
 import { selectUser } from "../../store/user/selectors";
 import { useSelector, useDispatch } from "react-redux";
@@ -134,7 +134,41 @@ export default function Classroom() {
       );
     }
     default: {
-      return <h1>Log in to join a classroom</h1>;
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <h1 style={{ textAlign: "center" }}>
+                Log in to join a classroom
+              </h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Link to="/login">
+                <Button>Login</Button>
+              </Link>
+            </Col>
+            <Col
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Link to="/signup">
+                <Button>Sign Up</Button>
+              </Link>
+            </Col>
+          </Row>
+        </Container>
+      );
     }
   }
 }
