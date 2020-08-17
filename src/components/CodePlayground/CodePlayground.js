@@ -25,16 +25,12 @@ import {
 } from "../../store/exercise/selectors";
 import Loading from "../Loading";
 
-export default function CodePlayground() {
+export default function CodePlayground(props) {
   const dispatch = useDispatch();
   const isDone = useSelector(selectIsDone);
   const exercise = useSelector(selectExercise);
   const messages = useSelector(selectMessages);
   console.log(messages);
-
-  useEffect(() => {
-    dispatch(getRandomExercise());
-  }, [dispatch]);
 
   useEffect(() => {
     if (exercise) {
@@ -141,7 +137,6 @@ ${code}
               mode: "javascript",
               ...codeMirrorOptions,
             }}
-            onKeyPress={(editor, event) => {}}
             onBeforeChange={(editor, data, js) => {
               set_code(js);
             }}

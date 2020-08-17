@@ -45,6 +45,13 @@ export default (state = initialState, { type, payload }) => {
         exercise: payload,
       };
     }
+
+    case "SET_EXERCISE": {
+      return {
+        ...state,
+        exercise: payload,
+      };
+    }
     default:
       return state;
   }

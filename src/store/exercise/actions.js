@@ -67,3 +67,10 @@ export const resetState = () => {
     type: "RESET_STATE",
   };
 };
+
+export const setNewExercise = (exercise) => {
+  return {
+    type: "SET_EXERCISE",
+    payload: exercise,
+  };
+};
