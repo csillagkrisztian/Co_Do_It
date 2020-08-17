@@ -19,12 +19,8 @@ export default function Navigation() {
         Co_Do_It
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav style={{ width: "100%" }} fill>
-          <NavbarItem path="/" linkText="Home" />
-          <NavbarItem path="/playground" linkText="Play Solo" />
-          {loginLogoutControls}
-        </Nav>
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+        <Nav fill>{loginLogoutControls}</Nav>
       </Navbar.Collapse>
     </Navbar>
   );

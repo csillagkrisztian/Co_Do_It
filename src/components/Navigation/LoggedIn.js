@@ -19,7 +19,6 @@ export default function LoggedIn() {
       )}
       <Nav.Item style={{ color: "white", padding: ".5rem 1rem" }}>
         {user.name}
-        {"     "}({user.accountType})
       </Nav.Item>
       <Button onClick={() => dispatch(logOut())}>Logout</Button>
     </>

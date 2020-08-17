@@ -11,36 +11,29 @@ import Login from "./pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
-import { Jumbotron } from "react-bootstrap";
 import Playground from "./pages/Playground/PlaygroundPage";
 import CreateExercise from "./pages/CreateExercise/CreateExercise";
 
 import io from "socket.io-client";
 import { selectUser } from "./store/user/selectors";
 import Classroom from "./pages/Classroom/Classroom";
-let socket;
-const SERVERLINK = "localhost:4000";
+import HomePage from "./pages/HomePage/HomePage";
+import { apiUrl } from "./config/constants";
 
-const Home = () => {
-  const user = useSelector(selectUser);
-  useEffect(() => {
-    socket = io(SERVERLINK);
-    socket.emit("joined", user);
-    return () => {
-      socket.emit("disconnect");
-      socket.off();
-    };
-  }, [SERVERLINK, user]);
-  return (
-    <Jumbotron>
-      <h1>Home</h1>
-    </Jumbotron>
-  );
-};
+let socket;
 
 function App() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAppLoading);
+  const user = useSelector(selectUser);
+  /* useEffect(() => {
+    socket = io(apiUrl);
+    socket.emit("joined", { user: user.name, room: user.id });
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
+  }, [user]);*/
 
   useEffect(() => {
     dispatch(getUserWithStoredToken());
@@ -52,8 +45,8 @@ function App() {
       <MessageBox />
       {isLoading ? <Loading /> : null}
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/classroom/:id" component={Classroom} />
+        <Route exact path="/" component={HomePage} />
+        <Route path="/classroom/:name" component={Classroom} />
         <Route path="/playground" component={Playground} />
         <Route path="/create" component={CreateExercise} />
         <Route path="/signup" component={SignUp} />
