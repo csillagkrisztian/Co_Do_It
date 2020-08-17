@@ -22,18 +22,11 @@ export default function Classroom() {
   const specificExercise = useSelector(selectExercise);
 
   const [selected, setSelected] = useState(false);
+  const [doneMembers, setDoneMembers] = useState([]);
   const [roomMembers, setRoomMembers] = useState([]);
-  console.log(roomMembers);
+  console.log(doneMembers);
 
   socket = io(apiUrl);
-
-  const setSuccess = () => {
-    console.log(` ${user.name} is done`);
-  };
-
-  const setTeacherExample = () => {
-    console.log(`Teachers solution`);
-  };
 
   const userObject = {
     id: user.id,
@@ -41,14 +34,27 @@ export default function Classroom() {
     room: `The classroom of ${params.name}`,
   };
 
+  const setSuccess = () => {
+    socket.emit("success", userObject);
+  };
+
+  const setTeacherExample = () => {
+    console.log(`Teachers solution`);
+  };
+
   useEffect(() => {
     dispatch(getAllExercises());
     if (user.accountType === "teacher") {
       socket.emit("delete previous room", userObject.room);
+      socket.emit("delete finished students", userObject.room);
     }
   }, []);
 
   useEffect(() => {
+    socket.on("star refresh", (done) => {
+      setDoneMembers(done);
+    });
+
     socket.on("refresh", (members) => {
       setRoomMembers(members);
     });
@@ -59,6 +65,7 @@ export default function Classroom() {
     if (!specificExercise) {
       socket.emit("i want exercise", userObject.room);
     }
+
     return () => {
       socket.off();
     };
@@ -86,7 +93,12 @@ export default function Classroom() {
           <Row>
             <Col className="col-2">
               {roomMembers.map((member, id) => (
-                <p key={id}>{member.name}</p>
+                <p key={id}>
+                  {member.name}
+                  {doneMembers.find((done) => done.name === member.name)
+                    ? "٭"
+                    : ""}
+                </p>
               ))}
             </Col>
             <Col>
@@ -116,7 +128,12 @@ export default function Classroom() {
           <Row>
             <Col className="col-2">
               {roomMembers.map((member, id) => (
-                <p key={id}>{member.name}</p>
+                <p key={id}>
+                  {member.name}
+                  {doneMembers.find((done) => done.name === member.name)
+                    ? "٭"
+                    : ""}
+                </p>
               ))}
             </Col>
             <Col>
