@@ -10,13 +10,11 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 import { equal } from "../equal";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getRandomExercise,
   sendMistakeStatus,
   sendErrorStatus,
   sendSuccessStatus,
   deleteStatuses,
   exerciseCompleted,
-  resetState,
 } from "../../store/exercise/actions";
 import {
   selectExercise,
@@ -24,17 +22,13 @@ import {
   selectIsDone,
 } from "../../store/exercise/selectors";
 import Loading from "../Loading";
+import ClickSuccessButton from "../ClickPracticeButton";
 
-export default function CodePlayground() {
+export default function CodePlayground(props) {
   const dispatch = useDispatch();
   const isDone = useSelector(selectIsDone);
   const exercise = useSelector(selectExercise);
   const messages = useSelector(selectMessages);
-  console.log(messages);
-
-  useEffect(() => {
-    dispatch(getRandomExercise());
-  }, [dispatch]);
 
   useEffect(() => {
     if (exercise) {
@@ -54,8 +48,6 @@ export default function CodePlayground() {
 
   const [code, set_code] = useState(initialState);
   const [testCase, set_testCase] = useState("");
-
-  console.log(testCase);
 
   const runCode = (testCase, id) => {
     let submits = [];
@@ -141,7 +133,6 @@ ${code}
               mode: "javascript",
               ...codeMirrorOptions,
             }}
-            onKeyPress={(editor, event) => {}}
             onBeforeChange={(editor, data, js) => {
               set_code(js);
             }}
@@ -169,15 +160,14 @@ ${code}
           {isDone && (
             <p>
               Congratulations! You passed all the tests!
-              <button
-                onClick={() => {
-                  set_code(initialState);
-                  dispatch(resetState());
-                  dispatch(getRandomExercise());
-                }}
-              >
-                Click here for a new challenge!
-              </button>
+              <ClickSuccessButton
+                buttonText={"Click ME!"}
+                set_code={set_code}
+                resetState={props.resetState}
+                neededAction={props.neededAction}
+                neededFunction={props.neededFunction}
+                initialState={initialState}
+              />
             </p>
           )}
         </div>
