@@ -59,6 +59,9 @@ export default function Classroom() {
     if (!specificExercise) {
       socket.emit("i want exercise", userObject.room);
     }
+    return () => {
+      socket.off();
+    };
   });
 
   useEffect(() => {
