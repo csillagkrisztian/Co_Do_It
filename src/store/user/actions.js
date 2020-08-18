@@ -110,3 +110,36 @@ export const getUserWithStoredToken = () => {
     }
   };
 };
+
+export const getUserForProfile = (id) => async (dispatch, getState) => {
+  const token = selectToken(getState());
+
+  if (token === null) return;
+
+  dispatch(appLoading());
+
+  try {
+    const response = await axios.get(`${apiUrl}/users/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(response.data);
+    dispatch(addLookingAt(response.data));
+    dispatch(appDoneLoading());
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data.message);
+      dispatch(setMessage("danger", true, error.response.data.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    } else {
+      console.log(error.message);
+      dispatch(setMessage("danger", true, error.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    }
+  }
+};
+
+export const addLookingAt = (data) => {
+  return { type: "ADD_LOOKING_AT", payload: data };
+};
