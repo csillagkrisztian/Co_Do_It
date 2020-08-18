@@ -38,10 +38,14 @@ export default function BattleRoom() {
   const { name, room } = userObject;
 
   useEffect(() => {
-    if (!ready && params.name === user.name && roomMembers.length > 1) {
+    console.log(params.name, name);
+
+    if (!ready && params.name === name) {
       dispatch(getRandomExercise());
     }
-  }, []);
+  }, [user]);
+
+  console.log(randomExercise);
 
   useEffect(() => {
     if (randomExercise && !ready) {
@@ -61,11 +65,6 @@ export default function BattleRoom() {
       dispatch(setNewExercise(exercise));
       setReady(true);
     });
-
-    return () => {
-      socket.emit("delete previous room", room);
-      socket.off();
-    };
   });
 
   useEffect(() => {
@@ -80,10 +79,10 @@ export default function BattleRoom() {
     };
   }, [user]);
 
-  return user.accountType === "guest" ? (
-    <h1>Please log in to Battle</h1>
-  ) : roomMembers.length < 2 ? (
+  return roomMembers.length < 2 ? (
     <h1>Waiting for a challenger</h1>
+  ) : user.accountType === "guest" ? (
+    <h1>Please log in to Battle</h1>
   ) : (
     <Container>
       <Row>
