@@ -1,5 +1,5 @@
 import React, { useState, useEffect, cloneElement } from "react";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row, Button } from "react-bootstrap";
 import io from "socket.io-client";
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { apiUrl } from "../../config/constants";
@@ -10,6 +10,7 @@ import { selectExercise } from "../../store/exercise/selectors";
 import {
   getRandomExercise,
   setNewExercise,
+  resetState,
 } from "../../store/exercise/actions";
 
 let socket;
@@ -20,7 +21,7 @@ export default function BattleRoom() {
 
   const params = useParams() || "nothing";
   const dispatch = useDispatch();
-  const [winner, setWinner] = useState({});
+  const [winner, setWinner] = useState();
   const [ready, setReady] = useState(false);
   const [code, setCode] = useState(initialCode);
   const [roomMembers, setRoomMembers] = useState([]);
@@ -37,15 +38,19 @@ export default function BattleRoom() {
 
   const { name, room } = userObject;
 
-  useEffect(() => {
-    console.log(params.name, name);
+  const sendWinner = (user) => {
+    socket.emit("winner", user);
+  };
 
-    if (!ready && params.name === name) {
+  const resetGame = (room) => {
+    socket.emit("reset game", room);
+  };
+
+  useEffect(() => {
+    if (!ready && params.name === name && !randomExercise) {
       dispatch(getRandomExercise());
     }
   }, [user]);
-
-  console.log(randomExercise);
 
   useEffect(() => {
     if (randomExercise && !ready) {
@@ -65,6 +70,23 @@ export default function BattleRoom() {
       dispatch(setNewExercise(exercise));
       setReady(true);
     });
+
+    socket.on("set winner", (winner) => {
+      setWinner(winner);
+    });
+
+    socket.on("set play again", (room) => {
+      dispatch(resetState());
+
+      setWinner(false);
+      setReady(false);
+      if (params.name === name) {
+        dispatch(getRandomExercise());
+      }
+    });
+    return () => {
+      socket.off();
+    };
   });
 
   useEffect(() => {
@@ -79,12 +101,12 @@ export default function BattleRoom() {
     };
   }, [user]);
 
-  return roomMembers.length < 2 ? (
-    <h1>Waiting for a challenger</h1>
-  ) : user.accountType === "guest" ? (
+  return user.accountType === "guest" ? (
     <h1>Please log in to Battle</h1>
+  ) : roomMembers.length < 2 ? (
+    <h1>Waiting for a challenger</h1>
   ) : (
-    <Container>
+    <Container fluid>
       <Row>
         <Col className="col-2">
           {roomMembers.map((member, id) => (
@@ -92,16 +114,28 @@ export default function BattleRoom() {
           ))}
         </Col>
         <Col>
-          {ready && (
+          {ready && !winner && (
             <CodePlayground
               initialState={initialCode}
               code={code}
               set_code={setCode}
               neededFunction={() => {
-                console.log("I win");
+                sendWinner(userObject);
               }}
               editorName={editorName}
             />
+          )}
+          {winner && (
+            <div>
+              <h1>{winner.name} is the winner!</h1>
+              <Button
+                onClick={() => {
+                  resetGame(room);
+                }}
+              >
+                Play again?
+              </Button>
+            </div>
           )}
         </Col>
       </Row>
