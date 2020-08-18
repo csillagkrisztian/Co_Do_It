@@ -25,6 +25,15 @@ import Loading from "../Loading";
 import ClickSuccessButton from "../ClickPracticeButton";
 
 export default function CodePlayground(props) {
+  const {
+    code,
+    set_code,
+    initialState,
+    neededAction,
+    neededFunction,
+    resetState,
+    editorName,
+  } = props;
   const dispatch = useDispatch();
   const isDone = useSelector(selectIsDone);
   const exercise = useSelector(selectExercise);
@@ -43,10 +52,6 @@ export default function CodePlayground(props) {
     lineWrapping: true,
   };
 
-  const initialState = `// write here 
-  `;
-
-  const [code, set_code] = useState(initialState);
   const [testCase, set_testCase] = useState("");
 
   const runCode = (testCase, id) => {
@@ -125,7 +130,7 @@ ${code}
               ...codeMirrorOptions,
             }}
           />
-          <div className="editor-header">Your Editor</div>
+          <div className="editor-header">{editorName}</div>
           <CodeMirror
             className="code-text-editor"
             value={code}
@@ -162,10 +167,9 @@ ${code}
               Congratulations! You passed all the tests!
               <ClickSuccessButton
                 buttonText={"Click ME!"}
-                set_code={set_code}
-                resetState={props.resetState}
-                neededAction={props.neededAction}
-                neededFunction={props.neededFunction}
+                resetState={resetState}
+                neededAction={neededAction}
+                neededFunction={neededFunction}
                 initialState={initialState}
               />
             </p>

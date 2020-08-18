@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { useParams, Link } from "react-router-dom";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { apiUrl } from "../../config/constants";
 import { selectUser } from "../../store/user/selectors";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,20 +20,17 @@ export default function Classroom() {
   const user = useSelector(selectUser);
   const exercises = useSelector(selectExercises);
   const specificExercise = useSelector(selectExercise);
+  const initialCode = "";
+  const initialEditorName = "Your Editor";
 
+  const [editorName, setEditorName] = useState(initialEditorName);
+  const [code, setCode] = useState(initialCode);
   const [selected, setSelected] = useState(false);
+  const [doneMembers, setDoneMembers] = useState([]);
   const [roomMembers, setRoomMembers] = useState([]);
-  console.log(roomMembers);
+  console.log(doneMembers);
 
   socket = io(apiUrl);
-
-  const setSuccess = () => {
-    console.log(` ${user.name} is done`);
-  };
-
-  const setTeacherExample = () => {
-    console.log(`Teachers solution`);
-  };
 
   const userObject = {
     id: user.id,
@@ -41,14 +38,41 @@ export default function Classroom() {
     room: `The classroom of ${params.name}`,
   };
 
+  const { id, name, room } = userObject;
+
+  const setSuccess = () => {
+    socket.emit("success", userObject, code);
+  };
+
+  const setTeacherExample = () => {
+    console.log(`Teachers solution`);
+  };
+
+  const clearAllDoneMembers = () => {
+    socket.emit("clear all finished", room);
+    setSelected(false);
+  };
+
+  const findDoneMember = (member) =>
+    doneMembers.find((done) => done.name === member.name);
+
   useEffect(() => {
     dispatch(getAllExercises());
     if (user.accountType === "teacher") {
-      socket.emit("delete previous room", userObject.room);
+      socket.emit("delete previous room", room);
+      socket.emit("delete finished students", room);
     }
   }, []);
 
   useEffect(() => {
+    socket.on("new exercise", () => {
+      setSelected(false);
+    });
+
+    socket.on("star refresh", (done) => {
+      setDoneMembers(done);
+    });
+
     socket.on("refresh", (members) => {
       setRoomMembers(members);
     });
@@ -57,15 +81,16 @@ export default function Classroom() {
       setSelected(true);
     });
     if (!specificExercise) {
-      socket.emit("i want exercise", userObject.room);
+      socket.emit("i want exercise", room);
     }
+
     return () => {
       socket.off();
     };
   });
 
   useEffect(() => {
-    if (!userObject.name) {
+    if (!name) {
       return;
     }
     socket.emit("joined", userObject, (members) => {});
@@ -86,7 +111,23 @@ export default function Classroom() {
           <Row>
             <Col className="col-2">
               {roomMembers.map((member, id) => (
-                <p key={id}>{member.name}</p>
+                <p
+                  key={id}
+                  onClick={() => {
+                    if (findDoneMember(member)) {
+                      const doneMember = findDoneMember(member);
+                      setCode(doneMember.code);
+                      setEditorName(`The code of ${member.name}`);
+                    } else {
+                      console.log("nope");
+                    }
+                  }}
+                >
+                  {member.name}
+                  {doneMembers.find((done) => done.name === member.name)
+                    ? "٭"
+                    : ""}
+                </p>
               ))}
             </Col>
             <Col>
@@ -95,20 +136,39 @@ export default function Classroom() {
                   exercises={exercises}
                   socket={socket}
                   id={user.id}
-                  room={userObject.room}
+                  room={room}
                   setSelected={setSelected}
                   user={user}
                 />
               ) : (
-                <CodePlayground neededFunction={setTeacherExample} />
+                <CodePlayground
+                  initialState={initialCode}
+                  code={code}
+                  set_code={setCode}
+                  neededFunction={setTeacherExample}
+                  editorName={editorName}
+                />
               )}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button
+                onClick={() => {
+                  clearAllDoneMembers();
+                }}
+              >
+                Start a new class
+              </Button>
             </Col>
           </Row>
         </Container>
       );
     }
     case "student": {
-      return (
+      return findDoneMember(userObject) ? (
+        <h1>CONGRATULATIONS! WHOOHOO!</h1>
+      ) : (
         <Container fluid>
           <Row className="justify-content-md-center">
             <h1 className="mt-2">{`The Classroom of ${params.name}`}</h1>
@@ -116,7 +176,10 @@ export default function Classroom() {
           <Row>
             <Col className="col-2">
               {roomMembers.map((member, id) => (
-                <p key={id}>{member.name}</p>
+                <p key={id}>
+                  {member.name}
+                  {findDoneMember(member) ? "٭" : ""}
+                </p>
               ))}
             </Col>
             <Col>
@@ -126,7 +189,12 @@ export default function Classroom() {
                   is like?
                 </p>
               ) : (
-                <CodePlayground neededFunction={setSuccess} />
+                <CodePlayground
+                  code={code}
+                  set_code={setCode}
+                  neededFunction={setSuccess}
+                  editorName={editorName}
+                />
               )}
             </Col>
           </Row>
@@ -134,7 +202,41 @@ export default function Classroom() {
       );
     }
     default: {
-      return <h1>Log in to join a classroom</h1>;
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <h1 style={{ textAlign: "center" }}>
+                Log in to join a classroom
+              </h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Link to="/login">
+                <Button>Login</Button>
+              </Link>
+            </Col>
+            <Col
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Link to="/signup">
+                <Button>Sign Up</Button>
+              </Link>
+            </Col>
+          </Row>
+        </Container>
+      );
     }
   }
 }
