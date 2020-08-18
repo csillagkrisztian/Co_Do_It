@@ -5,7 +5,6 @@ export default function ClickSuccessButton(props) {
   const dispatch = useDispatch();
 
   const onClickHandler = () => {
-    props.set_code(props.initialState);
     if (props.resetState) {
       dispatch(props.resetState());
     }
