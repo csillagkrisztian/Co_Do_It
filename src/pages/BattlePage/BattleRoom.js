@@ -126,8 +126,10 @@ export default function BattleRoom() {
               }}
               editorName={editorName}
             />
-          ) : (
+          ) : !roomMembers.find((member) => member.name === params.name) ? (
             <h1>The owner is not in the room!</h1>
+          ) : (
+            ""
           )}
           {winner && (
             <div>
