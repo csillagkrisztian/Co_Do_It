@@ -17,6 +17,7 @@ export default function LoggedIn() {
           <NavbarItem path={`/classroom/${user.name}`} linkText="Classroom" />
         </>
       )}
+      <NavbarItem path={"/battle/"} linkText="Battle"></NavbarItem>
       <Nav.Item style={{ color: "white", padding: ".5rem 1rem" }}>
         {user.name}
       </Nav.Item>

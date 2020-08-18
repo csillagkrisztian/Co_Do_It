@@ -14,8 +14,10 @@ import { getUserWithStoredToken } from "./store/user/actions";
 import Playground from "./pages/Playground/PlaygroundPage";
 import CreateExercise from "./pages/CreateExercise/CreateExercise";
 
-import Classroom from "./pages/Classroom/Classroom";
+import Classroom from "./pages/ClassroomPage/Classroom";
 import HomePage from "./pages/HomePage/HomePage";
+import Battle from "./pages/BattlePage/Battle";
+import BattleRoom from "./pages/BattlePage/BattleRoom";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +34,9 @@ function App() {
       {isLoading ? <Loading /> : null}
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route path="/battle/:name" component={BattleRoom} />
         <Route path="/classroom/:name" component={Classroom} />
+        <Route path="/battle" component={Battle} />
         <Route path="/playground" component={Playground} />
         <Route path="/create" component={CreateExercise} />
         <Route path="/signup" component={SignUp} />
