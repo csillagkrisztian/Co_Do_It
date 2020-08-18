@@ -114,7 +114,9 @@ export default function BattleRoom() {
           ))}
         </Col>
         <Col>
-          {ready && !winner && (
+          {ready &&
+          !winner &&
+          roomMembers.find((member) => member.name === params.name) ? (
             <CodePlayground
               initialState={initialCode}
               code={code}
@@ -124,6 +126,8 @@ export default function BattleRoom() {
               }}
               editorName={editorName}
             />
+          ) : (
+            <h1>The owner is not in the room!</h1>
           )}
           {winner && (
             <div>
