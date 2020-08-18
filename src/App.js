@@ -11,15 +11,11 @@ import Login from "./pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
-import { Jumbotron } from "react-bootstrap";
 import Playground from "./pages/Playground/PlaygroundPage";
 import CreateExercise from "./pages/CreateExercise/CreateExercise";
 
-const Home = () => (
-  <Jumbotron>
-    <h1>Home</h1>
-  </Jumbotron>
-);
+import Classroom from "./pages/Classroom/Classroom";
+import HomePage from "./pages/HomePage/HomePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +31,8 @@ function App() {
       <MessageBox />
       {isLoading ? <Loading /> : null}
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={HomePage} />
+        <Route path="/classroom/:name" component={Classroom} />
         <Route path="/playground" component={Playground} />
         <Route path="/create" component={CreateExercise} />
         <Route path="/signup" component={SignUp} />
