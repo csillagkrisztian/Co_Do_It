@@ -128,13 +128,15 @@ export default function BattleRoom() {
           {winner && (
             <div>
               <h1>{winner.name} is the winner!</h1>
-              <Button
-                onClick={() => {
-                  resetGame(room);
-                }}
-              >
-                Play again?
-              </Button>
+              {params.name === user.name && (
+                <Button
+                  onClick={() => {
+                    resetGame(room);
+                  }}
+                >
+                  Play again?
+                </Button>
+              )}
             </div>
           )}
         </Col>
