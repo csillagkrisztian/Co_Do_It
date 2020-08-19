@@ -13,6 +13,7 @@ import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { selectExercise } from "../../store/exercise/selectors";
 import ClassroomTable from "../../components/ClassroomTable/ClassroomTable";
 import { titleStyle } from "../../style/titleStyle";
+import { profileIconStyle } from "../../style/profileIconStyle";
 let socket;
 
 export default function Classroom() {
@@ -34,12 +35,13 @@ export default function Classroom() {
   socket = io(apiUrl);
 
   const userObject = {
+    imageUrl: user.imageUrl,
     id: user.id,
     name: user.name,
     room: `The classroom of ${params.name}`,
   };
 
-  const { id, name, room } = userObject;
+  const { imageUrl, id, name, room } = userObject;
 
   const setSuccess = () => {
     socket.emit("success", userObject, code);
@@ -129,6 +131,10 @@ export default function Classroom() {
                     }
                   }}
                 >
+                  <img
+                    src={member.imageUrl}
+                    style={{ ...profileIconStyle, marginRight: "1rem" }}
+                  ></img>
                   {member.name}
                   {doneMembers.find((done) => done.name === member.name)
                     ? "٭"

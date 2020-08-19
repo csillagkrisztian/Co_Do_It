@@ -3,9 +3,20 @@ import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import blank from "../../images/blank.png";
 import { titleStyle } from "../../style/titleStyle";
+import { useDispatch, useSelector } from "react-redux";
+import { getTeacherNames } from "../../store/user/actions";
+import { selectTeacherNames, selectUser } from "../../store/user/selectors";
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");
+  const dispatch = useDispatch();
+
+  useState(() => {
+    dispatch(getTeacherNames());
+  }, []);
+
+  const allTeachers = useSelector(selectTeacherNames);
+  const user = useSelector(selectUser);
 
   return (
     <div>
@@ -27,18 +38,22 @@ export default function HomePage() {
                   marginRight: "auto",
                 }}
               />
-              <Link to="/battle">
-                <div
-                  style={{
-                    marginTop: "3rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button>Let's go battle!</Button>
-                </div>
-              </Link>
+              {user.accountType !== "guest" ? (
+                <Link to="/battle">
+                  <div
+                    style={{
+                      marginTop: "3rem",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Button>Let's go battle!</Button>
+                  </div>
+                </Link>
+              ) : (
+                <p style={titleStyle}>Log in to use this feature</p>
+              )}
             </div>
           </Col>
           <Col className="title-card">
@@ -59,19 +74,25 @@ export default function HomePage() {
                 marginBottom: "1.1rem",
               }}
             >
-              <FormGroup>
-                <Form.Label>Teacher's Name</Form.Label>
-                <Form.Control
-                  value={teacher}
-                  onChange={(event) => setTeacher(event.target.value)}
-                  type="text"
-                  placeholder="Enter name"
-                  required
-                />
-              </FormGroup>
-              <Link to={`/classroom/${teacher}`}>
-                <Button>Submit</Button>
-              </Link>
+              {user.accountType !== "guest" ? (
+                <FormGroup>
+                  <Form.Label>Teacher's Name</Form.Label>
+                  <Form.Control
+                    value={teacher}
+                    onChange={(event) => setTeacher(event.target.value)}
+                    type="text"
+                    placeholder="Enter name"
+                    required
+                  />
+                </FormGroup>
+              ) : (
+                <p style={{ marginTop: "2rem" }}>Log in to use this feature</p>
+              )}
+              {allTeachers.includes(teacher) && (
+                <Link to={`/classroom/${teacher}`}>
+                  <Button>Submit</Button>
+                </Link>
+              )}
             </Form>
           </Col>
 

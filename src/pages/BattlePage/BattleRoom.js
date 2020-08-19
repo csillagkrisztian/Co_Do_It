@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { apiUrl } from "../../config/constants";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser } from "../../store/user/selectors";
+import { selectUser, selectUserNames } from "../../store/user/selectors";
 import { useParams } from "react-router-dom";
 import { selectExercise } from "../../store/exercise/selectors";
 import {
@@ -12,6 +12,8 @@ import {
   setNewExercise,
   resetState,
 } from "../../store/exercise/actions";
+import { profileIconStyle } from "../../style/profileIconStyle";
+import { getUserNames } from "../../store/user/actions";
 
 let socket;
 
@@ -31,6 +33,7 @@ export default function BattleRoom() {
   socket = io(apiUrl);
 
   const userObject = {
+    imageUrl: user.imageUrl,
     id: user.id,
     name: user.name,
     room: `Battle room of ${params.name}`,
@@ -85,6 +88,7 @@ export default function BattleRoom() {
       }
     });
     return () => {
+      socket.emit("unjoined", userObject, () => {});
       socket.off();
     };
   });
@@ -110,7 +114,13 @@ export default function BattleRoom() {
       <Row>
         <Col className="col-2">
           {roomMembers.map((member, id) => (
-            <p key={id + 1}>{member.name}</p>
+            <p key={id + 1}>
+              <img
+                src={member.imageUrl}
+                style={{ ...profileIconStyle, marginRight: "1rem" }}
+              ></img>
+              {member.name}
+            </p>
           ))}
         </Col>
         <Col>

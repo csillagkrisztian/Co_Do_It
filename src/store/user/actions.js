@@ -179,3 +179,75 @@ export const updateUserProfile = (id, title, imageUrl, description) => async (
     }
   }
 };
+
+export const getUserNames = () => async (dispatch, getState) => {
+  const token = selectToken(getState());
+
+  if (token === null) return;
+
+  dispatch(appLoading());
+
+  try {
+    const response = await axios.get(`${apiUrl}/users`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(response.data);
+    dispatch(addUserNames(response.data));
+    dispatch(appDoneLoading());
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data.message);
+      dispatch(setMessage("danger", true, error.response.data.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    } else {
+      console.log(error.message);
+      dispatch(setMessage("danger", true, error.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    }
+  }
+};
+
+export const addUserNames = (data) => {
+  return {
+    type: "ADD_USERNAMES",
+    payload: data,
+  };
+};
+
+export const getTeacherNames = () => async (dispatch, getState) => {
+  const token = selectToken(getState());
+
+  if (token === null) return;
+
+  dispatch(appLoading());
+
+  try {
+    const response = await axios.get(`${apiUrl}/teachers`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(response.data);
+    dispatch(addTeacherNames(response.data));
+    dispatch(appDoneLoading());
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data.message);
+      dispatch(setMessage("danger", true, error.response.data.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    } else {
+      console.log(error.message);
+      dispatch(setMessage("danger", true, error.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    }
+  }
+};
+
+export const addTeacherNames = (data) => {
+  return {
+    type: "ADD_TEACHERNAMES",
+    payload: data,
+  };
+};

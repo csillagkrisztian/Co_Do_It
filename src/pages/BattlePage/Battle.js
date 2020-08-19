@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/user/selectors";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, selectUserNames } from "../../store/user/selectors";
 import { titleStyle } from "../../style/titleStyle";
+import { getUserNames } from "../../store/user/actions";
 
 export default function Battle() {
   const [joinInput, setJoinInput] = useState("");
   const user = useSelector(selectUser);
+  const userNames = useSelector(selectUserNames);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserNames());
+  }, []);
+  console.log(userNames);
+
   return !user ? (
     <h1>Please log in to battles</h1>
   ) : (
@@ -52,18 +61,19 @@ export default function Battle() {
             ></input>
           </div>
           <br></br>
-
-          <Link to={`/battle/${joinInput}`}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Button>Join</Button>
-            </div>
-          </Link>
+          {userNames.includes(joinInput) && (
+            <Link to={`/battle/${joinInput}`}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Button>Join</Button>
+              </div>
+            </Link>
+          )}
         </Col>
       </Row>
     </Container>
