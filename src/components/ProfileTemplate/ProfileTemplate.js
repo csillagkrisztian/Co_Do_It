@@ -12,6 +12,8 @@ export default function ProfileTemplate(props) {
     setImageUrl,
     imageUrl,
     imageUrlState,
+    setTitle,
+    titleState,
   } = props;
 
   return (
@@ -49,6 +51,19 @@ export default function ProfileTemplate(props) {
           )}
         </Col>
         <Col>
+          {setTitle && (
+            <>
+              <label>title:</label>
+              <br></br>
+              <input
+                type="url"
+                value={titleState}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              ></input>
+            </>
+          )}
           {setImageUrl && (
             <>
               <label>image url:</label>

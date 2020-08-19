@@ -26,7 +26,6 @@ import ClickSuccessButton from "../ClickSuccessButton";
 import { Container, Row, Col } from "react-bootstrap";
 import { titleStyle } from "../../style/titleStyle";
 import buttontest from "../../images/buttontest.png";
-import computerLeg from "../../images/computerlegs.png";
 
 export default function CodePlayground(props) {
   const {

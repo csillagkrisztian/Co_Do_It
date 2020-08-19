@@ -212,7 +212,13 @@ export default function Classroom() {
         <Container>
           <Row>
             <Col>
-              <h1 style={{ textAlign: "center" }}>
+              <h1
+                style={{
+                  ...titleStyle,
+                  textAlign: "center",
+                  marginBottom: "4rem",
+                }}
+              >
                 Log in to join a classroom
               </h1>
             </Col>
@@ -226,7 +232,7 @@ export default function Classroom() {
               }}
             >
               <Link to="/login">
-                <Button>Login</Button>
+                <Button className="btn-lg">Login</Button>
               </Link>
             </Col>
             <Col
@@ -237,7 +243,7 @@ export default function Classroom() {
               }}
             >
               <Link to="/signup">
-                <Button>Sign Up</Button>
+                <Button className="btn-lg">Sign Up</Button>
               </Link>
             </Col>
           </Row>

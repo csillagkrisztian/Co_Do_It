@@ -143,3 +143,39 @@ export const getUserForProfile = (id) => async (dispatch, getState) => {
 export const addLookingAt = (data) => {
   return { type: "ADD_LOOKING_AT", payload: data };
 };
+
+export const updateUserProfile = (id, title, imageUrl, description) => async (
+  dispatch,
+  getState
+) => {
+  const token = selectToken(getState());
+
+  if (token === null) return;
+
+  dispatch(appLoading());
+
+  try {
+    const response = await axios.patch(
+      `${apiUrl}/users/${id}`,
+      { title, imageUrl, description },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log(response.data);
+    dispatch(loginSuccess(response.data));
+    dispatch(appDoneLoading());
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data.message);
+      dispatch(setMessage("danger", true, error.response.data.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    } else {
+      console.log(error.message);
+      dispatch(setMessage("danger", true, error.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    }
+  }
+};
