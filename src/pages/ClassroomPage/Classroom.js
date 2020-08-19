@@ -7,11 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import io from "socket.io-client";
 import { getAllExercises } from "../../store/classRoom/actions";
 import { selectExercises } from "../../store/classRoom/selectors";
-import { setNewExercise } from "../../store/exercise/actions";
+import { setNewExercise, resetState } from "../../store/exercise/actions";
 
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { selectExercise } from "../../store/exercise/selectors";
 import ClassroomTable from "../../components/ClassroomTable/ClassroomTable";
+import { titleStyle } from "../../style/titleStyle";
 let socket;
 
 export default function Classroom() {
@@ -51,6 +52,7 @@ export default function Classroom() {
   const clearAllDoneMembers = () => {
     socket.emit("clear all finished", room);
     setSelected(false);
+    dispatch(resetState());
   };
 
   const findDoneMember = (member) =>
@@ -67,6 +69,7 @@ export default function Classroom() {
   useEffect(() => {
     socket.on("new exercise", () => {
       setSelected(false);
+      dispatch(resetState());
     });
 
     socket.on("star refresh", (done) => {
@@ -106,7 +109,10 @@ export default function Classroom() {
       return (
         <Container fluid>
           <Row className="justify-content-center">
-            <h2 className="mt-2">{`Welcome ${params.name}! Ready to teach?`}</h2>
+            <h2
+              style={titleStyle}
+              className="mt-2"
+            >{`Welcome ${params.name}! Ready to teach?`}</h2>
           </Row>
           <Row>
             <Col className="col-2">

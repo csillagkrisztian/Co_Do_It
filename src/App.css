@@ -1,7 +1,8 @@
 @import "./components/CodePlayground/CodePlayground.css";
 @import "./pages/SignUp/SignUp.css";
+@import "./pages/HomePage/HomePage.css";
 .App {
-  background-color: #f49f0a;
+  background-color: #f08700;
   height: 100%;
   overflow: auto;
 }

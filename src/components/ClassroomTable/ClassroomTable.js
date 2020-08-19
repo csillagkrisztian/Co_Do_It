@@ -7,7 +7,7 @@ export default function ClassroomTable(params) {
   const { exercises, socket, room, user, setSelected } = params;
   const dispatch = useDispatch();
   return (
-    <div>
+    <div style={{ fontFamily: "'Montserrat', sans-serif" }}>
       <Table bordered hover variant="dark">
         <thead>
           <tr>
