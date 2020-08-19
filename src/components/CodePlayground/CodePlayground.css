@@ -1,16 +1,56 @@
 @import url("https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-
 .editor-header {
-  color: #fcf7f8;
+  color: #c9fbff;
   text-align: center;
   font-family: "Rowdies", cursive;
 }
 
 .code-editor {
-  background-color: #00a6a6;
+  background: #00a6a6;
+  border: 15px solid transparent;
+  padding: 10px;
+  border-image: url("../../images/bordertest.png") 30% stretch;
+  margin-bottom: 0px;
 }
 
-.example {
-  border: #00a6a6 solid 5px;
+.column-desc {
+  background: #f49f0a;
+
+  border: 50px solid transparent;
+  padding: 10px;
+  border-image: url("../../images/bordertest1.png") 30% stretch;
+}
+
+.message {
+  border: 50px solid transparent;
+  padding: 10px;
+  border-image: url("../../images/bordertest2.png") 30% stretch;
+}
+
+.run-all-button {
+  justify-content: flex-end;
+  color: #f49f0a;
+  background: #373f51;
+  height: 45px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.run-one-button {
+  color: #f49f0a;
+  background: #373f51;
+  height: 45px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.computer-leg {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  width: 240px;
 }

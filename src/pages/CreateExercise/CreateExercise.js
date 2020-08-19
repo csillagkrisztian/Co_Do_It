@@ -8,6 +8,8 @@ import {
   createExercise,
 } from "../../store/exerciseToBe/actions";
 import { selectTestCases } from "../../store/exerciseToBe/selectors";
+import { titleStyle } from "../../style/titleStyle";
+import { buttonCenter } from "../../style/buttonCenter";
 
 export default function CreateExercise() {
   const [description, setDescription] = useState("");
@@ -28,16 +30,16 @@ export default function CreateExercise() {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Form as={Col} md={{ span: 5 }} className="mt-5">
-          <h1 style={{ textAlign: "center" }}>Create a new Exercise</h1>
-          <Form.Group>
+        <Form md={{ span: 5 }} className="mt-5">
+          <h1 style={titleStyle}>Create a new Exercise</h1>
+          <Form.Group style={{ fontFamily: "'Montserrat', sans-serif" }}>
             <Form.Group>
               <Form.Label>Description</Form.Label>
               <Form.Control
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 type="text"
-                placeholder="Enter name"
+                placeholder="Awesome name of your exercise"
                 required
               />
             </Form.Group>
@@ -49,12 +51,14 @@ export default function CreateExercise() {
                 value={explanation}
                 onChange={(event) => setExplanation(event.target.value)}
                 type="text"
-                placeholder="Enter name"
+                placeholder="Your clear and straightforward explanation"
                 required
               />
             </Form.Group>
 
-            <Form.Label>Do you want to make this exercise public?</Form.Label>
+            <Form.Label style={{ textAlign: "center" }}>
+              Do you want to make this exercise public?
+            </Form.Label>
             <Form.Control
               value={isPublic}
               onChange={(event) => setIsPublic(!isPublic)}
@@ -63,51 +67,55 @@ export default function CreateExercise() {
               required
             />
             <br></br>
-            <Form.Text className="text">
-              Others will have a chance to play your exercise! Every
-              contribution helps us grow!
-            </Form.Text>
+            {isPublic && (
+              <Form.Text style={{ textAlign: "center" }}>
+                Thank you for the exercise, you are awesome!
+              </Form.Text>
+            )}
           </Form.Group>
           <Form.Group>
             {testCases.length >= 2 && description && explanation && (
-              <Button
-                style={{ marginLeft: "33%" }}
-                variant="primary"
-                type="submit"
-                onClick={() => {
-                  dispatch(
-                    addExerciseDetails(description, explanation, isPublic)
-                  );
-                  dispatch(createExercise());
-                  dispatch(resetExerciseToBe);
-                }}
-              >
-                Submit Exercise
-              </Button>
+              <div style={buttonCenter}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={() => {
+                    dispatch(
+                      addExerciseDetails(description, explanation, isPublic)
+                    );
+                    dispatch(createExercise());
+                    dispatch(resetExerciseToBe);
+                  }}
+                >
+                  Submit Exercise
+                </Button>
+              </div>
             )}
           </Form.Group>
         </Form>
-        <Col></Col>
-        <Form as={Col} md={{ span: 5 }} className="mt-5">
-          <Form.Group>
-            <TestCaseInput id={1} />
-            <TestCaseInput id={2} />
-            {inputList}
-          </Form.Group>
-          <Button
-            style={{ marginLeft: "33%", marginTop: "2rem" }}
-            onClick={() => {
-              setPressedCount(pressedCount + 1);
-              setInputList(
-                inputList.concat(
-                  <TestCaseInput key={pressedCount} id={pressedCount + 1} />
-                )
-              );
-            }}
-          >
-            Add a Test Case
-          </Button>
-        </Form>
+      </Row>
+      <Row>
+        <TestCaseInput id={1} />
+        <TestCaseInput id={2} />
+        {inputList}
+      </Row>
+      <Row>
+        <Col>
+          <div style={buttonCenter}>
+            <Button
+              onClick={() => {
+                setPressedCount(pressedCount + 1);
+                setInputList(
+                  inputList.concat(
+                    <TestCaseInput key={pressedCount} id={pressedCount + 1} />
+                  )
+                );
+              }}
+            >
+              Add a Test Case
+            </Button>
+          </div>
+        </Col>
       </Row>
     </Container>
   );

@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
+import { titleStyle } from "../../style/titleStyle";
 
 export default function Battle() {
   const [joinInput, setJoinInput] = useState("");
@@ -12,26 +13,56 @@ export default function Battle() {
   ) : (
     <Container>
       <Row>
-        <h1>Welcome to the battle page</h1>
+        <h1 style={{ ...titleStyle, marginBottom: "3rem" }}>
+          Welcome to the battle page
+        </h1>
       </Row>
       <Row>
         <Col>
-          <h2>Create a Battle Room</h2>
+          <h2 style={titleStyle}>Create a Battle Room</h2>
           <Link to={`/battle/${user.name}`}>
-            <Button>Create</Button>
+            <div
+              style={{
+                marginTop: "2rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button>Create</Button>
+            </div>
           </Link>
         </Col>
         <Col>
-          <h2>Join an Existing Battle Room</h2>
-          <input
-            onChange={(e) => {
-              setJoinInput(e.target.value);
+          <h2 style={titleStyle}>Join an Existing Battle Room</h2>
+          <div
+            style={{
+              marginTop: "2rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-            value={joinInput}
-          ></input>
+          >
+            <input
+              style={{ marginLeft: "auto", marginRight: "auto" }}
+              onChange={(e) => {
+                setJoinInput(e.target.value);
+              }}
+              value={joinInput}
+            ></input>
+          </div>
           <br></br>
+
           <Link to={`/battle/${joinInput}`}>
-            <Button>Join</Button>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button>Join</Button>
+            </div>
           </Link>
         </Col>
       </Row>

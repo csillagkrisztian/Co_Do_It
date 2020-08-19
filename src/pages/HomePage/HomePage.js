@@ -1,44 +1,62 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import blank from "../../images/blank.png";
+import { titleStyle } from "../../style/titleStyle";
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");
 
-  const titleStyle = {
-    marginTop: "2rem",
-    marginLeft: "auto",
-    marginRight: "auto",
-    textAlign: "center",
-  };
   return (
     <div>
-      <Container>
+      <Container style={{ justifyContent: "center" }}>
         <Row>
-          <h1 style={titleStyle}>Welcome to Co_Do_It!</h1>
+          <h1 style={{ ...titleStyle, marginBottom: "3rem" }}>
+            Welcome to Co_Do_It!
+          </h1>
         </Row>
         <Row>
-          <Col>
-            <h2 style={titleStyle}>Battle with your friends</h2>
-            <Link to="/battle">
-              <div
+          <Col className="title-card">
+            <div>
+              <h2 style={titleStyle}>Battle with Friends</h2>
+              <img
+                src={blank}
                 style={{
-                  marginTop: "3rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: "block",
+                  marginLeft: "auto",
+                  marginRight: "auto",
                 }}
-              >
-                <Button>Let's go battle!</Button>
-              </div>
-            </Link>
+              />
+              <Link to="/battle">
+                <div
+                  style={{
+                    marginTop: "3rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button>Let's go battle!</Button>
+                </div>
+              </Link>
+            </div>
           </Col>
-          <Col>
+          <Col className="title-card">
             <h2 style={titleStyle}>Join a Classroom</h2>
+            <img
+              src={blank}
+              style={{
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            />
             <Form
               style={{
                 ...titleStyle,
-                width: "33%",
+                marginTop: "1.1rem",
+                width: "78%",
+                marginBottom: "1.1rem",
               }}
             >
               <FormGroup>
@@ -57,8 +75,16 @@ export default function HomePage() {
             </Form>
           </Col>
 
-          <Col>
-            <h2 style={titleStyle}>Have fun in the Playground</h2>
+          <Col className="title-card">
+            <h2 style={titleStyle}>Practice Playground</h2>
+            <img
+              src={blank}
+              style={{
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            />
             <Link to="/playground">
               <div
                 style={{
