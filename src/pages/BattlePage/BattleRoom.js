@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { apiUrl } from "../../config/constants";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, selectUserNames } from "../../store/user/selectors";
+import { selectUser } from "../../store/user/selectors";
 import { useParams } from "react-router-dom";
 import { selectExercise } from "../../store/exercise/selectors";
 import {
@@ -13,7 +13,6 @@ import {
   resetState,
 } from "../../store/exercise/actions";
 import { profileIconStyle } from "../../style/profileIconStyle";
-import { getUserNames } from "../../store/user/actions";
 
 let socket;
 
@@ -53,6 +52,9 @@ export default function BattleRoom() {
     if (!ready && params.name === name && !randomExercise) {
       dispatch(getRandomExercise());
     }
+    return () => {
+      socket.off();
+    };
   }, [user]);
 
   useEffect(() => {
@@ -88,7 +90,6 @@ export default function BattleRoom() {
       }
     });
     return () => {
-      socket.emit("unjoined", userObject, () => {});
       socket.off();
     };
   });

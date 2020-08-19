@@ -15,7 +15,6 @@ export default function Battle() {
   useEffect(() => {
     dispatch(getUserNames());
   }, []);
-  console.log(userNames);
 
   return !user ? (
     <h1>Please log in to battles</h1>

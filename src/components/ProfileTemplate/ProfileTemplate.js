@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
+import { titleStyle } from "../../style/titleStyle";
 
 export default function ProfileTemplate(props) {
   const {
@@ -19,40 +20,24 @@ export default function ProfileTemplate(props) {
   return (
     <Container>
       <Row>
-        <h1>{title}</h1>
+        <h1 style={titleStyle}>{title}</h1>
       </Row>
       <Row>
         <Col>
-          <p>username:{name}</p>
+          <h2>{name}</h2>
+          <img
+            style={{ maxWidth: "420px", maxHeight: "420px" }}
+            src={imageUrl}
+          ></img>
           <p>account type:{accountType}</p>
           <p>about me: </p>
           {description}
         </Col>
-        <Col>
-          <img src={imageUrl}></img>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {setAboutMe && (
-            <>
-              <label>about me:</label>
-              <br></br>
-              <textarea
-                type="textbox"
-                rows="8"
-                cols="60"
-                value={aboutMe}
-                onChange={(e) => {
-                  setAboutMe(e.target.value);
-                }}
-              />
-            </>
-          )}
-        </Col>
-        <Col>
-          {setTitle && (
-            <>
+
+        {setTitle && setImageUrl && setAboutMe && (
+          <Col>
+            <h2 style={titleStyle}>Your edit page</h2>
+            <div style={{ marginTop: "1rem" }}>
               <label>title:</label>
               <br></br>
               <input
@@ -62,10 +47,8 @@ export default function ProfileTemplate(props) {
                   setTitle(e.target.value);
                 }}
               ></input>
-            </>
-          )}
-          {setImageUrl && (
-            <>
+            </div>
+            <div>
               <label>image url:</label>
               <br></br>
               <input
@@ -75,10 +58,24 @@ export default function ProfileTemplate(props) {
                   setImageUrl(e.target.value);
                 }}
               ></input>
-            </>
-          )}
-        </Col>
+            </div>
+            <div>
+              <label>about me:</label>
+
+              <textarea
+                type="textbox"
+                rows="8"
+                cols="60"
+                value={aboutMe}
+                onChange={(e) => {
+                  setAboutMe(e.target.value);
+                }}
+              />
+            </div>
+          </Col>
+        )}
       </Row>
+      <Row></Row>
     </Container>
   );
 }

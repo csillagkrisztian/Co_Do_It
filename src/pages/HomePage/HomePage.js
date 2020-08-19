@@ -13,6 +13,7 @@ export default function HomePage() {
 
   useState(() => {
     dispatch(getTeacherNames());
+    setTeacher("");
   }, []);
 
   const allTeachers = useSelector(selectTeacherNames);
