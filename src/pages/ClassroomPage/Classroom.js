@@ -31,7 +31,6 @@ export default function Classroom() {
   const [selected, setSelected] = useState(false);
   const [doneMembers, setDoneMembers] = useState([]);
   const [roomMembers, setRoomMembers] = useState([]);
-  console.log(doneMembers);
 
   socket = io(apiUrl);
 
@@ -42,12 +41,13 @@ export default function Classroom() {
     room: `The classroom of ${params.name}`,
   };
 
-  const { imageUrl, id, name, room } = userObject;
+  const { name, room } = userObject;
 
   const setSuccess = () => {
     socket.emit("success", userObject, code);
   };
 
+  //TODO add a feature to show all the students how to solve the exercise
   const setTeacherExample = () => {
     console.log(`Teachers solution`);
   };

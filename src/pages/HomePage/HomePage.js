@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import blank from "../../images/blank.png";
@@ -6,14 +6,20 @@ import { titleStyle } from "../../style/titleStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherNames } from "../../store/user/actions";
 import { selectTeacherNames, selectUser } from "../../store/user/selectors";
+import classRoom from "../../images/classroomPicture.png";
+import title from "../../images/title.gif";
+import battleRoom from "../../images/battlePicture.png";
+import practiceRoom from "../../images/practicePicture.png";
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");
   const dispatch = useDispatch();
 
-  useState(() => {
+  useEffect(() => {
     dispatch(getTeacherNames());
-    setTeacher("");
+    return () => {
+      setTeacher("");
+    };
   }, []);
 
   const allTeachers = useSelector(selectTeacherNames);
@@ -22,17 +28,22 @@ export default function HomePage() {
   return (
     <div>
       <Container style={{ justifyContent: "center" }}>
-        <Row>
-          <h1 style={{ ...titleStyle, marginBottom: "3rem" }}>
-            Welcome to Co_Do_It!
-          </h1>
+        <Row style={{ background: "#373f51" }}>
+          <img
+            style={{
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+            src={title}
+          ></img>
         </Row>
         <Row>
           <Col className="title-card">
             <div>
               <h2 style={titleStyle}>Battle with Friends</h2>
               <img
-                src={blank}
+                src={battleRoom}
                 style={{
                   display: "block",
                   marginLeft: "auto",
@@ -60,7 +71,7 @@ export default function HomePage() {
           <Col className="title-card">
             <h2 style={titleStyle}>Join a Classroom</h2>
             <img
-              src={blank}
+              src={classRoom}
               style={{
                 display: "block",
                 marginLeft: "auto",
@@ -100,7 +111,7 @@ export default function HomePage() {
           <Col className="title-card">
             <h2 style={titleStyle}>Practice Playground</h2>
             <img
-              src={blank}
+              src={practiceRoom}
               style={{
                 display: "block",
                 marginLeft: "auto",

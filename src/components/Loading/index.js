@@ -1,7 +1,7 @@
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import "./spinner.css";
-import loadingAnimation from "../../images/brand.gif";
+import loadingAnimation from "../../images/Loading.gif";
 
 export default function Loading() {
   return (
