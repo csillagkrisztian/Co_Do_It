@@ -13,6 +13,8 @@ import {
   resetState,
 } from "../../store/exercise/actions";
 import { profileIconStyle } from "../../style/profileIconStyle";
+import { titleStyle } from "../../style/titleStyle";
+import congratulations from "../../images/Congratulations.gif";
 
 let socket;
 
@@ -26,6 +28,7 @@ export default function BattleRoom() {
   const [ready, setReady] = useState(false);
   const [code, setCode] = useState(initialCode);
   const [roomMembers, setRoomMembers] = useState([]);
+
   const randomExercise = useSelector(selectExercise);
   const user = useSelector(selectUser);
 
@@ -49,15 +52,22 @@ export default function BattleRoom() {
   };
 
   useEffect(() => {
-    if (!ready && params.name === name && !randomExercise) {
-      dispatch(getRandomExercise());
+    let mounted = true;
+    if (mounted) {
+      if (!ready && params.name === name && !randomExercise) {
+        dispatch(getRandomExercise());
+      }
     }
     return () => {
+      mounted = false;
+      socket.emit("unjoined", userObject, (members) => {});
       socket.off();
     };
   }, [user]);
 
   useEffect(() => {
+    let mounted = true;
+
     if (randomExercise && !ready) {
       socket.emit("add exercise", {
         id: user.id,
@@ -68,39 +78,46 @@ export default function BattleRoom() {
     if (!randomExercise) {
       socket.emit("i want exercise", room);
     }
-    socket.on("refresh", (members) => {
-      setRoomMembers(members);
-    });
-    socket.on("exercise", (exercise) => {
-      dispatch(setNewExercise(exercise));
-      setReady(true);
-    });
+    if (mounted) {
+      socket.on("refresh", (members) => {
+        setRoomMembers(members);
+      });
+      socket.on("exercise", (exercise) => {
+        dispatch(setNewExercise(exercise));
+        setReady(true);
+      });
 
-    socket.on("set winner", (winner) => {
-      setWinner(winner);
-    });
+      socket.on("set winner", (winner) => {
+        setWinner(winner);
+      });
 
-    socket.on("set play again", (room) => {
-      dispatch(resetState());
+      socket.on("set play again", (room) => {
+        dispatch(resetState());
 
-      setWinner(false);
-      setReady(false);
-      if (params.name === name) {
-        dispatch(getRandomExercise());
-      }
-    });
+        setWinner(false);
+        setReady(false);
+        if (params.name === name) {
+          dispatch(getRandomExercise());
+        }
+      });
+    }
+
     return () => {
-      socket.off();
+      mounted = false;
     };
   });
 
   useEffect(() => {
-    if (!name) {
-      return;
+    let mounted = true;
+    if (mounted) {
+      if (!name) {
+        return;
+      }
+      socket.emit("joined", userObject, (members) => {});
     }
-    socket.emit("joined", userObject, (members) => {});
 
     return () => {
+      mounted = false;
       socket.emit("unjoined", userObject, (members) => {});
       socket.off();
     };
@@ -110,10 +127,12 @@ export default function BattleRoom() {
     <h1>Please log in to Battle</h1>
   ) : roomMembers.length < 2 ? (
     <h1>Waiting for a challenger</h1>
+  ) : !roomMembers.find((member) => member.name === params.name) ? (
+    <h1>The owner is not in the room!</h1>
   ) : (
     <Container fluid>
       <Row>
-        <Col className="col-2">
+        <Col className="col-2 mt-3">
           {roomMembers.map((member, id) => (
             <p key={id + 1}>
               <img
@@ -137,14 +156,20 @@ export default function BattleRoom() {
               }}
               editorName={editorName}
             />
-          ) : !roomMembers.find((member) => member.name === params.name) ? (
-            <h1>The owner is not in the room!</h1>
           ) : (
             ""
           )}
           {winner && (
             <div>
-              <h1>{winner.name} is the winner!</h1>
+              <h1 style={titleStyle}>{winner.name} is the winner!</h1>
+              <img
+                style={{
+                  display: "block",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+                src={congratulations}
+              />
               {params.name === user.name && (
                 <Button
                   onClick={() => {
