@@ -12,6 +12,7 @@ import {
   setNewExercise,
   resetState,
 } from "../../store/exercise/actions";
+import { profileIconStyle } from "../../style/profileIconStyle";
 
 let socket;
 
@@ -31,6 +32,7 @@ export default function BattleRoom() {
   socket = io(apiUrl);
 
   const userObject = {
+    imageUrl: user.imageUrl,
     id: user.id,
     name: user.name,
     room: `Battle room of ${params.name}`,
@@ -50,6 +52,9 @@ export default function BattleRoom() {
     if (!ready && params.name === name && !randomExercise) {
       dispatch(getRandomExercise());
     }
+    return () => {
+      socket.off();
+    };
   }, [user]);
 
   useEffect(() => {
@@ -110,7 +115,13 @@ export default function BattleRoom() {
       <Row>
         <Col className="col-2">
           {roomMembers.map((member, id) => (
-            <p key={id + 1}>{member.name}</p>
+            <p key={id + 1}>
+              <img
+                src={member.imageUrl}
+                style={{ ...profileIconStyle, marginRight: "1rem" }}
+              ></img>
+              {member.name}
+            </p>
           ))}
         </Col>
         <Col>
