@@ -124,11 +124,11 @@ export default function BattleRoom() {
   }, [user]);
 
   return user.accountType === "guest" ? (
-    <h1>Please log in to Battle</h1>
+    <h1 style={titleStyle}>Please log in to Battle</h1>
   ) : roomMembers.length < 2 ? (
-    <h1>Waiting for a challenger</h1>
+    <h1 style={titleStyle}>Waiting for a challenger</h1>
   ) : !roomMembers.find((member) => member.name === params.name) ? (
-    <h1>The owner is not in the room!</h1>
+    <h1 style={titleStyle}>The owner is not in the room!</h1>
   ) : (
     <Container fluid>
       <Row>

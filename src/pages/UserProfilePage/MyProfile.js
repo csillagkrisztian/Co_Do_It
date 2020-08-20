@@ -6,6 +6,7 @@ import ProfileTemplate from "../../components/ProfileTemplate/ProfileTemplate";
 import { Button, Container, Row } from "react-bootstrap";
 import { buttonCenter } from "../../style/buttonCenter";
 import { updateUserProfile } from "../../store/user/actions";
+import { containerBackground } from "../../style/containerBackground";
 
 export default function MyProfile() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export default function MyProfile() {
   }, [user]);
 
   return (
-    <Container fluid>
+    <Container style={containerBackground}>
       <Row>
         <ProfileTemplate
           title={user.title}

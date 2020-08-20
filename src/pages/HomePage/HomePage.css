@@ -3,3 +3,17 @@
   margin-left: 7px;
   margin-bottom: 5px;
 }
+
+.homepage-container {
+  justify-content: center;
+}
+
+.homepage-title {
+  background: #373f51;
+}
+
+.classroom-form {
+  margin-top: 1.1rem;
+  width: 78%;
+  margin-bottom: 1.1rem;
+}
