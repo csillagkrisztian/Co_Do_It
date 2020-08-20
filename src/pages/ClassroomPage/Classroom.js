@@ -14,6 +14,7 @@ import { selectExercise } from "../../store/exercise/selectors";
 import ClassroomTable from "../../components/ClassroomTable/ClassroomTable";
 import { titleStyle } from "../../style/titleStyle";
 import { profileIconStyle } from "../../style/profileIconStyle";
+import congratulations from "../../images/Congratulations.gif";
 let socket;
 
 export default function Classroom() {
@@ -117,7 +118,7 @@ export default function Classroom() {
             >{`Welcome ${params.name}! Ready to teach?`}</h2>
           </Row>
           <Row>
-            <Col className="col-2">
+            <Col className="col-2 mt-2">
               {roomMembers.map((member, id) => (
                 <p
                   key={id}
@@ -179,7 +180,24 @@ export default function Classroom() {
     }
     case "student": {
       return findDoneMember(userObject) ? (
-        <h1>CONGRATULATIONS! WHOOHOO!</h1>
+        <Container>
+          <Row>
+            <h1 style={titleStyle}>CONGRATULATIONS!</h1>
+          </Row>
+          <Row>
+            <h3 style={titleStyle}>You completed the exercise! Way to go!</h3>
+          </Row>
+          <Row>
+            <img
+              style={{
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              src={congratulations}
+            />
+          </Row>
+        </Container>
       ) : (
         <Container fluid>
           <Row className="justify-content-md-center">
@@ -189,6 +207,10 @@ export default function Classroom() {
             <Col className="col-2">
               {roomMembers.map((member, id) => (
                 <p key={id}>
+                  <img
+                    src={member.imageUrl}
+                    style={{ ...profileIconStyle, marginRight: "1rem" }}
+                  ></img>
                   {member.name}
                   {findDoneMember(member) ? "٭" : ""}
                 </p>

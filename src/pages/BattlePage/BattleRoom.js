@@ -113,7 +113,7 @@ export default function BattleRoom() {
   ) : (
     <Container fluid>
       <Row>
-        <Col className="col-2">
+        <Col className="col-2 mt-3">
           {roomMembers.map((member, id) => (
             <p key={id + 1}>
               <img
