@@ -22,7 +22,10 @@ import {
   selectIsDone,
 } from "../../store/exercise/selectors";
 import Loading from "../Loading";
-import ClickSuccessButton from "../ClickPracticeButton";
+import ClickSuccessButton from "../ClickSuccessButton";
+import { Container, Row, Col } from "react-bootstrap";
+import { titleStyle } from "../../style/titleStyle";
+import buttontest from "../../images/buttontest.png";
 
 export default function CodePlayground(props) {
   const {
@@ -94,94 +97,128 @@ ${code}
   return !exercise ? (
     <Loading />
   ) : (
-    <div className="container-fluid">
-      <div className="row editor-row">
-        <div className="col-sm">
-          <h3>{exercise.description}</h3>
-          <h5>{exercise.explanation}</h5>
-          <div className="example">
-            {exercise.testCases.map((p, id) => {
-              return (
-                <p key={id + 1}>
-                  {p.given} the result should be {"=>"} {p.result}
-                </p>
-              );
-            })}
-          </div>
-        </div>
-        <div className="col-sm-7 code-editor">
-          <div className="editor-header">
-            Given code{" "}
-            <select
-              onChange={(e) => {
-                set_testCase(exercise.testCases[e.target.selectedIndex]);
-              }}
-            >
-              {exercise.testCases.map((tc, id) => {
-                return <option key={id + 1}>{`Test Case ${id + 1}`}</option>;
+    <Container fluid>
+      <Row className="row ">
+        <Col className="col-sm ">
+          <div className="column-desc">
+            <h3>{exercise.description}</h3>
+            <h5>{exercise.explanation}</h5>
+            <div className="example">
+              {exercise.testCases.map((p, id) => {
+                return (
+                  <p key={id + 1}>
+                    {p.given} the result should be {"=>"} {p.result}
+                  </p>
+                );
               })}
-            </select>
+            </div>
           </div>
-          <CodeMirror
-            className="code-text-editor"
-            value={testCase.given}
-            options={{
-              mode: "javascript",
-              ...codeMirrorOptions,
-            }}
-          />
-          <div className="editor-header">{editorName}</div>
-          <CodeMirror
-            className="code-text-editor"
-            value={code}
-            options={{
-              mode: "javascript",
-              ...codeMirrorOptions,
-            }}
-            onBeforeChange={(editor, data, js) => {
-              set_code(js);
-            }}
-          />
-          <button
-            onClick={() => {
-              dispatch(deleteStatuses());
-              runAllCases();
-            }}
-          >
-            Submit code
-          </button>
-          <button
-            onClick={() => {
-              dispatch(deleteStatuses());
-              runCode(testCase, exercise.testCases.indexOf(testCase));
-            }}
-          >
-            Run this test case
-          </button>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
+          <div>
+            {messages.length !== 0 &&
+              messages.map((m, id) => {
+                return m[0] === "F" ? (
+                  <h6
+                    className="message"
+                    style={{
+                      ...titleStyle,
+                      background: "#B3001B",
+                      color: "#BBDEF0",
+                      margin: "0",
+                    }}
+                    key={id}
+                  >
+                    {m}
+                  </h6>
+                ) : (
+                  <h6
+                    className="message"
+                    style={{
+                      ...titleStyle,
+                      background: "#00A6A6",
+                      color: "#BBDEF0",
+                      margin: "0",
+                    }}
+                    key={id}
+                  >
+                    {m}
+                  </h6>
+                );
+              })}
+          </div>
           {isDone && (
-            <p>
-              Congratulations! You passed all the tests!
+            <>
+              <h4 style={titleStyle}>
+                Congratulations! You passed all the tests!
+              </h4>
               <ClickSuccessButton
-                buttonText={"Click ME!"}
+                buttonText={"Click Me To SUBMIT!"}
                 resetState={resetState}
                 neededAction={neededAction}
                 neededFunction={neededFunction}
                 initialState={initialState}
               />
-            </p>
+            </>
           )}
-        </div>
-        <div className="col-sm">
-          {messages.length !== 0 &&
-            messages.map((m, id) => {
-              return <p key={id}>{m}</p>;
-            })}
-        </div>
-      </div>
-    </div>
+        </Col>
+        <Col className="col-sm-7">
+          <div className="code-editor">
+            <div className="editor-header">
+              Given code{" "}
+              <select
+                onChange={(e) => {
+                  set_testCase(exercise.testCases[e.target.selectedIndex]);
+                }}
+              >
+                {exercise.testCases.map((tc, id) => {
+                  return <option key={id + 1}>{`Test Case ${id + 1}`}</option>;
+                })}
+              </select>
+            </div>
+            <CodeMirror
+              className="code-text-editor"
+              value={testCase.given}
+              options={{
+                mode: "javascript",
+                ...codeMirrorOptions,
+              }}
+            />
+            <div className="editor-header">{editorName}</div>
+            <CodeMirror
+              className="code-text-editor"
+              value={code}
+              options={{
+                mode: "javascript",
+                ...codeMirrorOptions,
+              }}
+              onBeforeChange={(editor, data, js) => {
+                set_code(js);
+              }}
+            />
+            <button
+              className="run-one-button"
+              style={{ backgroundImage: buttontest }}
+              onClick={() => {
+                dispatch(deleteStatuses());
+                runCode(testCase, exercise.testCases.indexOf(testCase));
+              }}
+            >
+              Run One Case
+            </button>
+            <button
+              className="run-all-button"
+              onClick={() => {
+                dispatch(deleteStatuses());
+                runAllCases();
+              }}
+            >
+              Run All Cases
+            </button>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <div className="col-sm-5"></div>
+      </Row>
+    </Container>
   );
 }

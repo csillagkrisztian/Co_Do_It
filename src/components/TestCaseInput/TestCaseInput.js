@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addTestCase } from "../../store/exerciseToBe/actions";
+import { Col } from "react-bootstrap";
+import { titleStyle } from "../../style/titleStyle";
 
 export default function TestCaseInput(props) {
   const [given, setGiven] = useState("");
@@ -14,7 +16,12 @@ export default function TestCaseInput(props) {
   const dispatch = useDispatch();
 
   return (
-    <>
+    <Form
+      as={Col}
+      md={{ span: 5 }}
+      className="mt-5"
+      style={{ ...titleStyle, fontFamily: "'Montserrat', sans-serif" }}
+    >
       <h3>Test case {props.id}</h3>
       <Form.Label>Given Variables</Form.Label>
 
@@ -24,7 +31,7 @@ export default function TestCaseInput(props) {
         value={given}
         onChange={(event) => setGiven(event.target.value)}
         type="text"
-        placeholder="Enter an exercise"
+        placeholder="const something = something;"
         required
       />
       <Form.Text className="text">
@@ -38,7 +45,7 @@ export default function TestCaseInput(props) {
         value={result}
         onChange={(event) => setResult(event.target.value)}
         type="text"
-        placeholder="Enter a result"
+        placeholder="[something else]"
         required
       />
       <Form.Text className="text">Please put the result in an array!</Form.Text>
@@ -107,6 +114,6 @@ export default function TestCaseInput(props) {
       <br></br>
       {resultError &&
         "Are you sure that is a valid result? It needs to be an array"}
-    </>
+    </Form>
   );
 }

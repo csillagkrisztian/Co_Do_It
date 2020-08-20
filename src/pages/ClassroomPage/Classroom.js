@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { apiUrl } from "../../config/constants";
 import { selectUser } from "../../store/user/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import io from "socket.io-client";
 import { getAllExercises } from "../../store/classRoom/actions";
 import { selectExercises } from "../../store/classRoom/selectors";
-import { setNewExercise } from "../../store/exercise/actions";
+import { setNewExercise, resetState } from "../../store/exercise/actions";
 
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { selectExercise } from "../../store/exercise/selectors";
 import ClassroomTable from "../../components/ClassroomTable/ClassroomTable";
+import { titleStyle } from "../../style/titleStyle";
+import { profileIconStyle } from "../../style/profileIconStyle";
+import congratulations from "../../images/Congratulations.gif";
 let socket;
 
 export default function Classroom() {
@@ -28,22 +31,23 @@ export default function Classroom() {
   const [selected, setSelected] = useState(false);
   const [doneMembers, setDoneMembers] = useState([]);
   const [roomMembers, setRoomMembers] = useState([]);
-  console.log(doneMembers);
 
   socket = io(apiUrl);
 
   const userObject = {
+    imageUrl: user.imageUrl,
     id: user.id,
     name: user.name,
     room: `The classroom of ${params.name}`,
   };
 
-  const { id, name, room } = userObject;
+  const { name, room } = userObject;
 
   const setSuccess = () => {
     socket.emit("success", userObject, code);
   };
 
+  //TODO add a feature to show all the students how to solve the exercise
   const setTeacherExample = () => {
     console.log(`Teachers solution`);
   };
@@ -51,6 +55,7 @@ export default function Classroom() {
   const clearAllDoneMembers = () => {
     socket.emit("clear all finished", room);
     setSelected(false);
+    dispatch(resetState());
   };
 
   const findDoneMember = (member) =>
@@ -67,6 +72,7 @@ export default function Classroom() {
   useEffect(() => {
     socket.on("new exercise", () => {
       setSelected(false);
+      dispatch(resetState());
     });
 
     socket.on("star refresh", (done) => {
@@ -106,10 +112,13 @@ export default function Classroom() {
       return (
         <Container fluid>
           <Row className="justify-content-center">
-            <h2 className="mt-2">{`Welcome ${params.name}! Ready to teach?`}</h2>
+            <h2
+              style={titleStyle}
+              className="mt-2"
+            >{`Welcome ${params.name}! Ready to teach?`}</h2>
           </Row>
           <Row>
-            <Col className="col-2">
+            <Col className="col-2 mt-2">
               {roomMembers.map((member, id) => (
                 <p
                   key={id}
@@ -123,6 +132,10 @@ export default function Classroom() {
                     }
                   }}
                 >
+                  <img
+                    src={member.imageUrl}
+                    style={{ ...profileIconStyle, marginRight: "1rem" }}
+                  ></img>
                   {member.name}
                   {doneMembers.find((done) => done.name === member.name)
                     ? "٭"
@@ -167,7 +180,24 @@ export default function Classroom() {
     }
     case "student": {
       return findDoneMember(userObject) ? (
-        <h1>CONGRATULATIONS! WHOOHOO!</h1>
+        <Container>
+          <Row>
+            <h1 style={titleStyle}>CONGRATULATIONS!</h1>
+          </Row>
+          <Row>
+            <h3 style={titleStyle}>You completed the exercise! Way to go!</h3>
+          </Row>
+          <Row>
+            <img
+              style={{
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              src={congratulations}
+            />
+          </Row>
+        </Container>
       ) : (
         <Container fluid>
           <Row className="justify-content-md-center">
@@ -177,6 +207,10 @@ export default function Classroom() {
             <Col className="col-2">
               {roomMembers.map((member, id) => (
                 <p key={id}>
+                  <img
+                    src={member.imageUrl}
+                    style={{ ...profileIconStyle, marginRight: "1rem" }}
+                  ></img>
                   {member.name}
                   {findDoneMember(member) ? "٭" : ""}
                 </p>
@@ -206,7 +240,13 @@ export default function Classroom() {
         <Container>
           <Row>
             <Col>
-              <h1 style={{ textAlign: "center" }}>
+              <h1
+                style={{
+                  ...titleStyle,
+                  textAlign: "center",
+                  marginBottom: "4rem",
+                }}
+              >
                 Log in to join a classroom
               </h1>
             </Col>
@@ -220,7 +260,7 @@ export default function Classroom() {
               }}
             >
               <Link to="/login">
-                <Button>Login</Button>
+                <Button className="btn-lg">Login</Button>
               </Link>
             </Col>
             <Col
@@ -231,7 +271,7 @@ export default function Classroom() {
               }}
             >
               <Link to="/signup">
-                <Button>Sign Up</Button>
+                <Button className="btn-lg">Sign Up</Button>
               </Link>
             </Col>
           </Row>

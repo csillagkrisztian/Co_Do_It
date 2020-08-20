@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { buttonCenter } from "../style/buttonCenter";
 
 export default function ClickSuccessButton(props) {
   const dispatch = useDispatch();
@@ -16,5 +17,22 @@ export default function ClickSuccessButton(props) {
     }
   };
 
-  return <button onClick={onClickHandler}>{props.buttonText}</button>;
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "0px",
+      }}
+    >
+      <button
+        className="btn btn-success btn-lg"
+        style={buttonCenter}
+        onClick={onClickHandler}
+      >
+        {props.buttonText}
+      </button>
+    </div>
+  );
 }
