@@ -11,6 +11,9 @@ import {
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
+export const ADD_TEACHERNAMES = "ADD_TEACHERNAMES";
+export const ADD_USERNAMES = "ADD_USERNAMES";
+export const ADD_LOOKING_AT = "ADD_LOOKING_AT";
 
 const loginSuccess = (userWithToken) => {
   return {
@@ -141,8 +144,33 @@ export const getUserForProfile = (id) => async (dispatch, getState) => {
   }
 };
 
-export const addLookingAt = (data) => {
-  return { type: "ADD_LOOKING_AT", payload: data };
+export const getTeacherNames = () => async (dispatch, getState) => {
+  const token = selectToken(getState());
+
+  if (token === null) return;
+
+  dispatch(appLoading());
+
+  try {
+    const response = await axios.get(`${apiUrl}/teachers`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(response.data);
+    dispatch(addTeacherNames(response.data));
+    dispatch(appDoneLoading());
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data.message);
+      dispatch(setMessage("danger", true, error.response.data.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    } else {
+      console.log(error.message);
+      dispatch(setMessage("danger", true, error.message));
+      dispatch(logOut());
+      dispatch(appDoneLoading());
+    }
+  }
 };
 
 export const updateUserProfile = (id, title, imageUrl, description) => async (
@@ -212,43 +240,18 @@ export const getUserNames = () => async (dispatch, getState) => {
 
 export const addUserNames = (data) => {
   return {
-    type: "ADD_USERNAMES",
+    type: ADD_USERNAMES,
     payload: data,
   };
-};
-
-export const getTeacherNames = () => async (dispatch, getState) => {
-  const token = selectToken(getState());
-
-  if (token === null) return;
-
-  dispatch(appLoading());
-
-  try {
-    const response = await axios.get(`${apiUrl}/teachers`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log(response.data);
-    dispatch(addTeacherNames(response.data));
-    dispatch(appDoneLoading());
-  } catch (error) {
-    if (error.response) {
-      console.log(error.response.data.message);
-      dispatch(setMessage("danger", true, error.response.data.message));
-      dispatch(logOut());
-      dispatch(appDoneLoading());
-    } else {
-      console.log(error.message);
-      dispatch(setMessage("danger", true, error.message));
-      dispatch(logOut());
-      dispatch(appDoneLoading());
-    }
-  }
 };
 
 export const addTeacherNames = (data) => {
   return {
-    type: "ADD_TEACHERNAMES",
+    type: ADD_TEACHERNAMES,
     payload: data,
   };
+};
+
+export const addLookingAt = (data) => {
+  return { type: ADD_LOOKING_AT, payload: data };
 };

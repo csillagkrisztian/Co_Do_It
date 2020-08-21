@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
+
 import { Link } from "react-router-dom";
-import { titleStyle } from "../../style/titleStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherNames } from "../../store/user/actions";
 import { selectTeacherNames, selectUser } from "../../store/user/selectors";
-import classRoom from "../../images/classroomPicture.png";
+import TitleCard from "../../components/HomePageComponents/TitleCard";
+// Styles
+import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
+import { containerBackground } from "../../style/containerBackground";
+import { imageCenter } from "../../style/imageCenter";
+import { titleStyle } from "../../style/titleStyle";
+
+// Images
 import title from "../../images/title.gif";
 import battleRoom from "../../images/battlePicture.png";
 import practiceRoom from "../../images/practicePicture-export.png";
-import { imageCenter } from "../../style/imageCenter";
-import { buttonCenter } from "../../style/buttonCenter";
-import TitleCard from "../../components/HomePageComponents/TitleCard";
-import { containerBackground } from "../../style/containerBackground";
+import classRoom from "../../images/classroomPicture.png";
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");

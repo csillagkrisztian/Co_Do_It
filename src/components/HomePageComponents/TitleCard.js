@@ -11,7 +11,7 @@ export default function TitleCard(props) {
   return (
     <div>
       <h2 style={titleStyle}>Battle with Friends</h2>
-      <img src={roomImage} style={imageCenter} />
+      <img src={roomImage} style={imageCenter} alt={"title card"} />
       {authorized ? (
         <Link to={link}>
           <div style={buttonCenter}>

@@ -10,6 +10,7 @@ import {
 import { selectTestCases } from "../../store/exerciseToBe/selectors";
 import { titleStyle } from "../../style/titleStyle";
 import { buttonCenter } from "../../style/buttonCenter";
+import { containerBackground } from "../../style/containerBackground";
 
 export default function CreateExercise() {
   const [description, setDescription] = useState("");
@@ -28,7 +29,7 @@ export default function CreateExercise() {
   }, []);
 
   return (
-    <Container>
+    <Container style={{ ...containerBackground, height: "auto" }}>
       <Row className="justify-content-center">
         <Form md={{ span: 5 }} className="mt-5">
           <h1 style={titleStyle}>Create a new Exercise</h1>

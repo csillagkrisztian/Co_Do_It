@@ -1,4 +1,4 @@
-import React, { useState, useEffect, cloneElement } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Col, Row, Button } from "react-bootstrap";
 import io from "socket.io-client";
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
@@ -15,6 +15,8 @@ import {
 import { profileIconStyle } from "../../style/profileIconStyle";
 import { titleStyle } from "../../style/titleStyle";
 import congratulations from "../../images/Congratulations.gif";
+import OnlineFeed from "../../components/ClassroomComponents/OnlineFeed";
+import { imageCenter } from "../../style/imageCenter";
 
 let socket;
 
@@ -51,6 +53,10 @@ export default function BattleRoom() {
     socket.emit("reset game", room);
   };
 
+  /**
+   * Some Socket IO event listeners and emitters
+   *
+   */
   useEffect(() => {
     let mounted = true;
     if (mounted) {
@@ -132,17 +138,7 @@ export default function BattleRoom() {
   ) : (
     <Container fluid>
       <Row>
-        <Col className="col-2 mt-3">
-          {roomMembers.map((member, id) => (
-            <p key={id + 1}>
-              <img
-                src={member.imageUrl}
-                style={{ ...profileIconStyle, marginRight: "1rem" }}
-              ></img>
-              {member.name}
-            </p>
-          ))}
-        </Col>
+        <OnlineFeed roomMembers={roomMembers} />
         <Col>
           {ready &&
           !winner &&
@@ -162,14 +158,7 @@ export default function BattleRoom() {
           {winner && (
             <div>
               <h1 style={titleStyle}>{winner.name} is the winner!</h1>
-              <img
-                style={{
-                  display: "block",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                }}
-                src={congratulations}
-              />
+              <img style={imageCenter} src={congratulations} />
               {params.name === user.name && (
                 <Button
                   onClick={() => {

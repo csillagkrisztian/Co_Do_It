@@ -10,7 +10,7 @@ export default function Playground() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getRandomExercise());
-  }, []);
+  }, [dispatch]);
   return (
     <div>
       <CodePlayground

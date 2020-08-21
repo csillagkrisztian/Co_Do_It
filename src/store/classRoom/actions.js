@@ -4,8 +4,10 @@ import { logOut } from "../user/actions";
 import { setMessage, appDoneLoading, appLoading } from "../appState/actions";
 import { selectToken } from "../user/selectors";
 
+export const ADD_EXERCISES = "ADD_EXERCISES";
+
 export const addExercises = (data) => {
-  return { type: "ADD_EXERCISES", payload: data };
+  return { type: ADD_EXERCISES, payload: data };
 };
 
 export const getAllExercises = () => {

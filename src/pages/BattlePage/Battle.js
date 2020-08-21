@@ -17,7 +17,7 @@ export default function Battle() {
 
   useEffect(() => {
     dispatch(getUserNames());
-  }, []);
+  }, [dispatch]);
 
   return !user ? (
     <h1>Please log in to battles</h1>
@@ -35,9 +35,7 @@ export default function Battle() {
             <div
               style={{
                 marginTop: "2rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                ...buttonCenter,
               }}
             >
               <Button variant="info">Create</Button>
