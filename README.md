@@ -8,15 +8,14 @@
 
 # Table of contents
 
-- [App Demo](#show-me-what-you-can-do...)
-- [Description](#now-you-got-my-attention,tell-me-more)
-- [Technologies List](#how-did-you-make-this?)
-- [Purpose](#Why-did-you-make-this?)
-- [User Stories](#So-as-a-user-what-can-I-do?)
-- [Document List](#Now-let's-dive-into-some-documents)
-- [Back end](#Backend)
-  <br>
-  <br>
+- App Demo
+- Description
+- Technologies List
+- Purpose
+- User Stories
+- Document List
+- Back end
+
 
 # "Show me what you can do..."
 
