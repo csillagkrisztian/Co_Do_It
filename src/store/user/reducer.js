@@ -1,4 +1,11 @@
-import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID } from "./actions";
+import {
+  LOG_OUT,
+  LOGIN_SUCCESS,
+  TOKEN_STILL_VALID,
+  ADD_USERNAMES,
+  ADD_TEACHERNAMES,
+  ADD_LOOKING_AT,
+} from "./actions";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -12,14 +19,14 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_USERNAMES": {
+    case ADD_USERNAMES: {
       return { ...state, userNames: action.payload };
     }
-    case "ADD_TEACHERNAMES": {
+    case ADD_TEACHERNAMES: {
       return { ...state, teacherNames: action.payload };
     }
 
-    case "ADD_LOOKING_AT": {
+    case ADD_LOOKING_AT: {
       return { ...state, lookingAt: action.payload };
     }
     case LOGIN_SUCCESS:

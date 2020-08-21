@@ -1,3 +1,12 @@
+import {
+  RESET_STATE,
+  SEND_STATUS,
+  DELETE_STATUSES,
+  COMPLETED_EXERCISE,
+  LOAD_EXERCISE,
+  SET_EXERCISE,
+} from "./actions";
+
 const initialState = {
   exercise: null,
   status: {
@@ -8,11 +17,11 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case "RESET_STATE": {
+    case RESET_STATE: {
       return initialState;
     }
 
-    case "SEND_STATUS": {
+    case SEND_STATUS: {
       return {
         ...state,
         status: {
@@ -22,7 +31,7 @@ export default (state = initialState, { type, payload }) => {
       };
     }
 
-    case "DELETE_STATUSES": {
+    case DELETE_STATUSES: {
       return {
         ...state,
         status: {
@@ -32,21 +41,21 @@ export default (state = initialState, { type, payload }) => {
       };
     }
 
-    case "COMPLETED_EXERCISE": {
+    case COMPLETED_EXERCISE: {
       return {
         ...state,
         status: { ...state.status, isDone: true },
       };
     }
 
-    case "LOAD_EXERCISE": {
+    case LOAD_EXERCISE: {
       return {
         ...state,
         exercise: payload,
       };
     }
 
-    case "SET_EXERCISE": {
+    case SET_EXERCISE: {
       return {
         ...state,
         exercise: payload,

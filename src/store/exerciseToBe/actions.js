@@ -9,22 +9,26 @@ import axios from "axios";
 import { selectToken } from "../user/selectors";
 import { logOut } from "../user/actions";
 
+export const ADD_TEST_CASE = "ADD_TEST_CASE";
+export const ADD_EXERCISE_DETAILS = "ADD_EXERCISE_DETAILS";
+export const RESET_EXERCISE_DETAILS = "RESET_EXERCISE_DETAILS";
+
 export const addTestCase = (given, result) => {
   return {
-    type: "ADD_TEST_CASE",
+    type: ADD_TEST_CASE,
     payload: { given, result },
   };
 };
 
 export const addExerciseDetails = (description, explanation, isPublic) => {
   return {
-    type: "ADD_EXERCISE_DETAILS",
+    type: ADD_EXERCISE_DETAILS,
     payload: { description, explanation, isPublic },
   };
 };
 
 export const resetExerciseToBe = {
-  type: "RESET_EXERCISE_DETAILS",
+  type: RESET_EXERCISE_DETAILS,
 };
 
 export const createExercise = () => {

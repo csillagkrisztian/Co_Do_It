@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { getUserForProfile } from "../../store/user/actions";
 import { selectUserLookingAt, selectUser } from "../../store/user/selectors";
 import Loading from "../../components/Loading";
+import { Container } from "react-bootstrap";
+import { containerBackground } from "../../style/containerBackground";
 
 export default function UserProfile() {
   const { id } = useParams();
@@ -16,13 +18,15 @@ export default function UserProfile() {
   const currentUser = useSelector(selectUserLookingAt);
 
   return currentUser ? (
-    <ProfileTemplate
-      title={currentUser.title}
-      name={currentUser.name}
-      accountType={currentUser.accountType}
-      description={currentUser.description}
-      imageUrl={currentUser.imageUrl}
-    />
+    <Container style={containerBackground}>
+      <ProfileTemplate
+        title={currentUser.title}
+        name={currentUser.name}
+        accountType={currentUser.accountType}
+        description={currentUser.description}
+        imageUrl={currentUser.imageUrl}
+      />
+    </Container>
   ) : user.accountType === "guest" ? (
     <h1>Log in to see other people's profiles</h1>
   ) : (
