@@ -15,13 +15,13 @@ export default function TitleCard(props) {
       {authorized ? (
         <Link to={link}>
           <div style={buttonCenter}>
-            <Button>{buttonText}</Button>
+            <Button variant="info">{buttonText}</Button>
           </div>
         </Link>
       ) : user.accountType !== "guest" ? (
         <Link to={link}>
           <div style={buttonCenter}>
-            <Button>{buttonText}</Button>
+            <Button variant="info">{buttonText}</Button>
           </div>
         </Link>
       ) : (

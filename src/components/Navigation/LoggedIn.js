@@ -36,7 +36,9 @@ export default function LoggedIn() {
         {user.name}
       </Nav.Item>
 
-      <Button onClick={() => dispatch(logOut())}>Logout</Button>
+      <Button variant="info" onClick={() => dispatch(logOut())}>
+        Logout
+      </Button>
     </>
   );
 }

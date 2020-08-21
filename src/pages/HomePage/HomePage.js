@@ -12,6 +12,7 @@ import practiceRoom from "../../images/practicePicture-export.png";
 import { imageCenter } from "../../style/imageCenter";
 import { buttonCenter } from "../../style/buttonCenter";
 import TitleCard from "../../components/HomePageComponents/TitleCard";
+import { containerBackground } from "../../style/containerBackground";
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");
@@ -29,7 +30,10 @@ export default function HomePage() {
 
   return (
     <div>
-      <Container className="homepage-container">
+      <Container
+        style={{ ...containerBackground, height: "auto" }}
+        className="homepage-container"
+      >
         <Row className="homepage-title">
           <img style={imageCenter} src={title}></img>
         </Row>
@@ -62,7 +66,7 @@ export default function HomePage() {
               )}
               {allTeachers.includes(teacher) && (
                 <Link to={`/classroom/${teacher}`}>
-                  <Button>Submit</Button>
+                  <Button variant="info">Submit</Button>
                 </Link>
               )}
             </Form>
