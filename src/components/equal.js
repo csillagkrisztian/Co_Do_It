@@ -1,3 +1,5 @@
+// helper function that determines whether two variables are equal to eachother or not
+
 function equal(a, b) {
   console.log(a, b);
   const condition = typeof a === "number" && typeof b === "number";

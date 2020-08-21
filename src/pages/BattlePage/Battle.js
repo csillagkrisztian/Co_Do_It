@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser, selectUserNames } from "../../store/user/selectors";
 import { titleStyle } from "../../style/titleStyle";
 import { getUserNames } from "../../store/user/actions";
+import { containerBackground } from "../../style/containerBackground";
+import { buttonCenter } from "../../style/buttonCenter";
+import { imageCenter } from "../../style/imageCenter";
 
 export default function Battle() {
   const [joinInput, setJoinInput] = useState("");
@@ -14,12 +17,12 @@ export default function Battle() {
 
   useEffect(() => {
     dispatch(getUserNames());
-  }, []);
+  }, [dispatch]);
 
   return !user ? (
     <h1>Please log in to battles</h1>
   ) : (
-    <Container>
+    <Container style={containerBackground}>
       <Row>
         <h1 style={{ ...titleStyle, marginBottom: "3rem" }}>
           Welcome to the battle page
@@ -32,12 +35,10 @@ export default function Battle() {
             <div
               style={{
                 marginTop: "2rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                ...buttonCenter,
               }}
             >
-              <Button>Create</Button>
+              <Button variant="info">Create</Button>
             </div>
           </Link>
         </Col>
@@ -46,9 +47,7 @@ export default function Battle() {
           <div
             style={{
               marginTop: "2rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              ...buttonCenter,
             }}
           >
             <input
@@ -62,14 +61,8 @@ export default function Battle() {
           <br></br>
           {userNames.includes(joinInput) && (
             <Link to={`/battle/${joinInput}`}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Button>Join</Button>
+              <div style={imageCenter}>
+                <Button variant="info">Join</Button>
               </div>
             </Link>
           )}

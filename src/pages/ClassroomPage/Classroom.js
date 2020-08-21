@@ -11,10 +11,13 @@ import { setNewExercise, resetState } from "../../store/exercise/actions";
 
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { selectExercise } from "../../store/exercise/selectors";
-import ClassroomTable from "../../components/ClassroomTable/ClassroomTable";
+import ClassroomTable from "../../components/ClassroomComponents/ClassroomTable";
 import { titleStyle } from "../../style/titleStyle";
 import { profileIconStyle } from "../../style/profileIconStyle";
 import congratulations from "../../images/Congratulations.gif";
+import { imageCenter } from "../../style/imageCenter";
+import { buttonCenter } from "../../style/buttonCenter";
+import OnlineFeed from "../../components/ClassroomComponents/OnlineFeed";
 let socket;
 
 export default function Classroom() {
@@ -51,6 +54,14 @@ export default function Classroom() {
   const setTeacherExample = () => {
     console.log(`Teachers solution`);
   };
+
+  /**
+   * SOCKET.IO event listeners and emitters that transfer the real time changes
+   *
+   * it was a choice to not use a database for this, but in the future I would like to declutter this page
+   *
+   * TODO make a new database model
+   */
 
   const clearAllDoneMembers = () => {
     socket.emit("clear all finished", room);
@@ -108,6 +119,8 @@ export default function Classroom() {
   }, [user]);
 
   switch (user.accountType) {
+    // if the user is a teacher
+
     case "teacher": {
       return (
         <Container fluid>
@@ -178,6 +191,9 @@ export default function Classroom() {
         </Container>
       );
     }
+
+    // if the user is a student
+
     case "student": {
       return findDoneMember(userObject) ? (
         <Container>
@@ -188,14 +204,7 @@ export default function Classroom() {
             <h3 style={titleStyle}>You completed the exercise! Way to go!</h3>
           </Row>
           <Row>
-            <img
-              style={{
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-              src={congratulations}
-            />
+            <img style={imageCenter} src={congratulations} />
           </Row>
         </Container>
       ) : (
@@ -204,24 +213,16 @@ export default function Classroom() {
             <h1 className="mt-2">{`The Classroom of ${params.name}`}</h1>
           </Row>
           <Row>
-            <Col className="col-2">
-              {roomMembers.map((member, id) => (
-                <p key={id}>
-                  <img
-                    src={member.imageUrl}
-                    style={{ ...profileIconStyle, marginRight: "1rem" }}
-                  ></img>
-                  {member.name}
-                  {findDoneMember(member) ? "٭" : ""}
-                </p>
-              ))}
-            </Col>
+            <OnlineFeed
+              roomMembers={roomMembers}
+              findDoneMember={findDoneMember}
+            />
             <Col>
               {!selected ? (
-                <p style={{ textAlign: "center" }}>
+                <h2 style={titleStyle}>
                   Your teacher is selecting material... Is this what exitement
                   is like?
-                </p>
+                </h2>
               ) : (
                 <CodePlayground
                   code={code}
@@ -235,6 +236,9 @@ export default function Classroom() {
         </Container>
       );
     }
+
+    // if the user is a guest
+
     default: {
       return (
         <Container>
@@ -252,24 +256,12 @@ export default function Classroom() {
             </Col>
           </Row>
           <Row>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <Col style={buttonCenter}>
               <Link to="/login">
                 <Button className="btn-lg">Login</Button>
               </Link>
             </Col>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <Col style={buttonCenter}>
               <Link to="/signup">
                 <Button className="btn-lg">Sign Up</Button>
               </Link>
