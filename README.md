@@ -6,6 +6,7 @@
 
 ## 🧑‍🎓 A social network and teaching tool for learning how to code in Javascript 🧑‍🎓
 
+### 👇👇👇 Click on the picture to see it in action!👇👇👇
 [![CO_DO_IT](https://i.ibb.co/xDHMztb/Screenshot-from-2020-08-21-16-17-35.png)](https://www.youtube.com/watch?v=Qrdbx_aJ0IM)
 
 # Table of contents
