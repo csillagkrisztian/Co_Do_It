@@ -7,7 +7,6 @@ import { titleStyle } from "../../style/titleStyle";
 import { getUserNames } from "../../store/user/actions";
 import { containerBackground } from "../../style/containerBackground";
 import { buttonCenter } from "../../style/buttonCenter";
-import { imageCenter } from "../../style/imageCenter";
 
 export default function Battle() {
   const [joinInput, setJoinInput] = useState("");
@@ -20,7 +19,7 @@ export default function Battle() {
   }, [dispatch]);
 
   return !user ? (
-    <h1>Please log in to battles</h1>
+    <h1 style={titleStyle}>Please log in to play battles</h1>
   ) : (
     <Container style={containerBackground}>
       <Row>
@@ -61,7 +60,7 @@ export default function Battle() {
           <br></br>
           {userNames.includes(joinInput) && (
             <Link to={`/battle/${joinInput}`}>
-              <div style={imageCenter}>
+              <div style={buttonCenter}>
                 <Button variant="info">Join</Button>
               </div>
             </Link>

@@ -6,6 +6,8 @@
 
 ## 🧑‍🎓 A social network and teaching tool for learning how to code in Javascript 🧑‍🎓
 
+[![CO_DO_IT](https://i.ibb.co/xDHMztb/Screenshot-from-2020-08-21-16-17-35.png)](https://www.youtube.com/watch?v=Qrdbx_aJ0IM)
+
 # Table of contents
 
 - App Demo
@@ -15,7 +17,6 @@
 - User Stories
 - Document List
 - Back end
-
 
 # "Show me what you can do..."
 
