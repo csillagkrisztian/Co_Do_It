@@ -25,7 +25,7 @@
   <img src="https://media.giphy.com/media/RGRzuO2pZreUyni9eP/giphy.gif?raw=true" alt="Application Demo"/>
   </p>
   
-  [Click here for the deployed version](https://https://codoit.netlify.app/)
+  [Click here for the deployed version](https://codoit.netlify.app/)
 
 # "Now you got my attention, tell me more..."
 
