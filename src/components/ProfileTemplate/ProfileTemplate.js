@@ -2,21 +2,19 @@ import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import { titleStyle } from "../../style/titleStyle";
 
-export default function ProfileTemplate(props) {
-  const {
-    title,
-    name,
-    accountType,
-    description,
-    setAboutMe,
-    aboutMe,
-    setImageUrl,
-    imageUrl,
-    imageUrlState,
-    setTitle,
-    titleState,
-  } = props;
-
+export default function ProfileTemplate({
+  title,
+  name,
+  accountType,
+  description,
+  setAboutMe,
+  aboutMe,
+  setImageUrl,
+  imageUrl,
+  imageUrlState,
+  setTitle,
+  titleState,
+}) {
   return (
     <Container>
       <Row>
@@ -66,6 +64,7 @@ export default function ProfileTemplate(props) {
                 type="textbox"
                 rows="8"
                 cols="60"
+                style={{ width: "-webkit-fill-available" }}
                 value={aboutMe}
                 onChange={(e) => {
                   setAboutMe(e.target.value);
