@@ -20,7 +20,9 @@ export default function LoggedIn() {
         </>
       )}
       <NavbarItem path={"/battle/"} linkText="Battle"></NavbarItem>
+      <NavbarItem path={"/about"} linkText="About"></NavbarItem>
       <NavbarItem path={"/myprofile"} linkText="My Profile"></NavbarItem>
+
       <NavbarBrand style={{ margin: 0 }}>
         <img
           src={user.imageUrl}

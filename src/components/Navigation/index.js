@@ -8,6 +8,7 @@ import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
 import brandLogo from "../../images/brand.png";
 import { iconStyle } from "../../style/iconStyle";
+import NavbarItem from "./NavbarItem";
 
 export default function Navigation() {
   const token = useSelector(selectToken);
