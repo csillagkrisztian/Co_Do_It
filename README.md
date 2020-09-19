@@ -6,17 +6,18 @@
 
 ## 🧑‍🎓 A social network and teaching tool for learning how to code in Javascript 🧑‍🎓
 
+### 👇👇👇 Click on the picture to see it in action!👇👇👇
+[![CO_DO_IT](https://i.ibb.co/xDHMztb/Screenshot-from-2020-08-21-16-17-35.png)](https://www.youtube.com/watch?v=Qrdbx_aJ0IM)
+
 # Table of contents
 
-- [App Demo](#show-me-what-you-can-do...)
-- [Description](#now-you-got-my-attention,tell-me-more)
-- [Technologies List](#how-did-you-make-this?)
-- [Purpose](#Why-did-you-make-this?)
-- [User Stories](#So-as-a-user-what-can-I-do?)
-- [Document List](#Now-let's-dive-into-some-documents)
-- [Back end](#Backend)
-  <br>
-  <br>
+- App Demo
+- Description
+- Technologies List
+- Purpose
+- User Stories
+- Document List
+- Back end
 
 # "Show me what you can do..."
 
@@ -24,7 +25,7 @@
   <img src="https://media.giphy.com/media/RGRzuO2pZreUyni9eP/giphy.gif?raw=true" alt="Application Demo"/>
   </p>
   
-  [Click here for the deployed version](https://kind-haibt-c4900f.netlify.app/)
+  [Click here for the deployed version](https://codoit.netlify.app/)
 
 # "Now you got my attention, tell me more..."
 

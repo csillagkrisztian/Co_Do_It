@@ -7,10 +7,12 @@ import { Button } from "react-bootstrap";
 
 export default function TitleCard(props) {
   let authorized = props.authorized;
-  const { roomImage, buttonText, link, user } = props;
+  const { roomImage, buttonText, link, user, title } = props;
   return (
+
     <div style={{ border: "2px solid #11A6A6" }}>
       <h2 style={titleStyle}>Battle with Friends</h2>
+
       <img src={roomImage} style={imageCenter} alt={"title card"} />
       {authorized ? (
         <Link to={link}>
@@ -25,7 +27,9 @@ export default function TitleCard(props) {
           </div>
         </Link>
       ) : (
-        <p style={titleStyle}>Log in to use this feature</p>
+        <Link to={"/login"}>
+          <p style={titleStyle}>Log in to use this feature</p>
+        </Link>
       )}
     </div>
   );

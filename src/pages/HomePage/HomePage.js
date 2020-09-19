@@ -46,6 +46,7 @@ export default function HomePage() {
         <Row className="homepage-title-cards">
           <Col className="title-card">
             <TitleCard
+              title={"Battle With Friends"}
               roomImage={battleRoom}
               buttonText={"Let's go battle"}
               link={"/battle"}
@@ -71,7 +72,9 @@ export default function HomePage() {
                   />
                 </FormGroup>
               ) : (
-                <p style={titleStyle}>Log in to use this feature</p>
+                <Link to={"/login"}>
+                  <p style={titleStyle}>Log in to use this feature</p>
+                </Link>
               )}
               {allTeachers.includes(teacher) && (
                 <Link to={`/classroom/${teacher}`}>
@@ -83,6 +86,7 @@ export default function HomePage() {
 
           <Col className="title-card">
             <TitleCard
+              title={"Practice Playground"}
               roomImage={practiceRoom}
               buttonText={"Play Solo"}
               link={"/playground"}
