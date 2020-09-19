@@ -1,16 +1,17 @@
-.title-card {
+.titleCard {
   margin: 10px;
+  border: 2px solid #11a6a6;
 }
 
-.homepage-container {
+.homepageContainer {
   justify-content: center;
 }
 
-.homepage-title {
+.homepageTitle {
   background: #373f51;
 }
 
-.classroom-form {
+.classroomForm {
   margin-top: 1.1rem;
   width: 78%;
   margin-bottom: 1.1rem;

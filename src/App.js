@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 
 import { Switch, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
@@ -29,8 +29,10 @@ function App() {
     dispatch(getUserWithStoredToken());
   }, [dispatch]);
 
+  const { App } = styles;
+
   return (
-    <div className="App">
+    <div className={App}>
       <Navigation />
       <MessageBox />
       {isLoading ? <Loading /> : null}

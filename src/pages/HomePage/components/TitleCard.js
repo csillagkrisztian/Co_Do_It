@@ -1,7 +1,7 @@
 import React from "react";
-import { titleStyle } from "../../style/titleStyle";
-import { imageCenter } from "../../style/imageCenter";
-import { buttonCenter } from "../../style/buttonCenter";
+import { titleStyle } from "../../../style/titleStyle";
+import { imageCenter } from "../../../style/imageCenter";
+import { buttonCenter } from "../../../style/buttonCenter";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
@@ -9,8 +9,7 @@ export default function TitleCard(props) {
   let authorized = props.authorized;
   const { roomImage, buttonText, link, user, title } = props;
   return (
-
-    <div style={{ border: "2px solid #11A6A6" }}>
+    <>
       <h2 style={titleStyle}>Battle with Friends</h2>
 
       <img src={roomImage} style={imageCenter} alt={"title card"} />
@@ -31,6 +30,6 @@ export default function TitleCard(props) {
           <p style={titleStyle}>Log in to use this feature</p>
         </Link>
       )}
-    </div>
+    </>
   );
 }
