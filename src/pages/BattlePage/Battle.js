@@ -8,6 +8,7 @@ import { getUserNames } from "../../store/user/actions";
 import { containerBackground } from "../../style/containerBackground";
 import { buttonCenter } from "../../style/buttonCenter";
 import { imageCenter } from "../../style/imageCenter";
+import styles from "./Battle.module.css";
 
 export default function Battle() {
   const [joinInput, setJoinInput] = useState("");
@@ -29,7 +30,7 @@ export default function Battle() {
         </h1>
       </Row>
       <Row>
-        <Col>
+        <Col className={styles.optionCard}>
           <h2 style={titleStyle}>Create a Battle Room</h2>
           <Link to={`/battle/${user.name}`}>
             <div
@@ -42,7 +43,7 @@ export default function Battle() {
             </div>
           </Link>
         </Col>
-        <Col>
+        <Col className={styles.optionCard}>
           <h2 style={titleStyle}>Join an Existing Battle Room</h2>
           <div
             style={{
