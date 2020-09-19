@@ -1,5 +1,6 @@
 export const buttonCenter = {
-  marginTop: "3rem",
+  marginTop: "2rem",
+  marginBottom: "1rem",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

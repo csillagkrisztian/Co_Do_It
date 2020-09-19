@@ -9,7 +9,7 @@ export default function TitleCard(props) {
   let authorized = props.authorized;
   const { roomImage, buttonText, link, user } = props;
   return (
-    <div>
+    <div style={{ border: "2px solid #11A6A6" }}>
       <h2 style={titleStyle}>Battle with Friends</h2>
       <img src={roomImage} style={imageCenter} alt={"title card"} />
       {authorized ? (
@@ -20,7 +20,7 @@ export default function TitleCard(props) {
         </Link>
       ) : user.accountType !== "guest" ? (
         <Link to={link}>
-          <div style={buttonCenter}>
+          <div style={{ ...buttonCenter }}>
             <Button variant="info">{buttonText}</Button>
           </div>
         </Link>

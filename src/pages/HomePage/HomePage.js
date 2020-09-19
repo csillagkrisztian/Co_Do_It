@@ -39,7 +39,7 @@ export default function HomePage() {
       >
         <Row className="homepage-title">
           <img
-            style={{ ...imageCenter, width: "100%", maxWidth: "700px" }}
+            style={{ ...imageCenter, width: "100%", maxWidth: "650px" }}
             src={title}
           ></img>
         </Row>
@@ -53,29 +53,34 @@ export default function HomePage() {
             />
           </Col>
           <Col className="title-card">
-            <h2 style={titleStyle}>Join a Classroom</h2>
-            <img src={classRoom} style={imageCenter} />
-            <Form className="classroom-form" style={titleStyle}>
-              {user.accountType !== "guest" ? (
-                <FormGroup>
-                  <Form.Label>Teacher's Name</Form.Label>
-                  <Form.Control
-                    value={teacher}
-                    onChange={(event) => setTeacher(event.target.value)}
-                    type="text"
-                    placeholder="Enter name"
-                    required
-                  />
-                </FormGroup>
-              ) : (
-                <p style={titleStyle}>Log in to use this feature</p>
-              )}
-              {allTeachers.includes(teacher) && (
-                <Link to={`/classroom/${teacher}`}>
-                  <Button variant="info">Submit</Button>
-                </Link>
-              )}
-            </Form>
+            <div style={{ border: "2px solid #11A6A6" }}>
+              <h2 style={titleStyle}>Join a Classroom</h2>
+              <img src={classRoom} style={imageCenter} />
+              <Form
+                className="classroom-form"
+                style={{ ...titleStyle, marginTop: "0" }}
+              >
+                {user.accountType !== "guest" ? (
+                  <FormGroup>
+                    <Form.Label>Teacher's Name</Form.Label>
+                    <Form.Control
+                      value={teacher}
+                      onChange={(event) => setTeacher(event.target.value)}
+                      type="text"
+                      placeholder="Enter name"
+                      required
+                    />
+                  </FormGroup>
+                ) : (
+                  <p style={titleStyle}>Log in to use this feature</p>
+                )}
+                {allTeachers.includes(teacher) && (
+                  <Link to={`/classroom/${teacher}`}>
+                    <Button variant="info">Submit</Button>
+                  </Link>
+                )}
+              </Form>
+            </div>
           </Col>
 
           <Col className="title-card">

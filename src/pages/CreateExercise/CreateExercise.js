@@ -15,10 +15,8 @@ import { containerBackground } from "../../style/containerBackground";
 export default function CreateExercise() {
   const [description, setDescription] = useState("");
   const [explanation, setExplanation] = useState("");
-
   const [inputList, setInputList] = useState([]);
   const [pressedCount, setPressedCount] = useState(2);
-
   const [isPublic, setIsPublic] = useState(false);
 
   const dispatch = useDispatch();
@@ -26,11 +24,11 @@ export default function CreateExercise() {
 
   useEffect(() => {
     dispatch(resetExerciseToBe);
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container style={{ ...containerBackground, height: "auto" }}>
-      <Row className="justify-content-center">
+      <Row className="justify-content-center" style={{ padding: "10px" }}>
         <Form md={{ span: 5 }} className="mt-5">
           <h1 style={titleStyle}>Create a new Exercise</h1>
           <Form.Group style={{ fontFamily: "'Montserrat', sans-serif" }}>
