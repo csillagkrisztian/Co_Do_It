@@ -20,6 +20,7 @@ import Battle from "./pages/BattlePage/Battle";
 import BattleRoom from "./pages/BattlePage/BattleRoom";
 import UserProfile from "./pages/UserProfilePage/UserProfile";
 import MyProfile from "./pages/UserProfilePage/MyProfile";
+import About from "./pages/AboutPage/AboutPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/create" component={CreateExercise} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
+        <Route path="/about" component={About} />
       </Switch>
     </div>
   );
