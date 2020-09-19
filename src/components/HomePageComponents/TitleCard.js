@@ -9,8 +9,10 @@ export default function TitleCard(props) {
   let authorized = props.authorized;
   const { roomImage, buttonText, link, user, title } = props;
   return (
-    <div>
-      <h2 style={titleStyle}>{title}</h2>
+
+    <div style={{ border: "2px solid #11A6A6" }}>
+      <h2 style={titleStyle}>Battle with Friends</h2>
+
       <img src={roomImage} style={imageCenter} alt={"title card"} />
       {authorized ? (
         <Link to={link}>

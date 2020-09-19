@@ -38,7 +38,10 @@ export default function HomePage() {
         className="homepage-container"
       >
         <Row className="homepage-title">
-          <img style={imageCenter} src={title}></img>
+          <img
+            style={{ ...imageCenter, width: "100%", maxWidth: "650px" }}
+            src={title}
+          ></img>
         </Row>
         <Row className="homepage-title-cards">
           <Col className="title-card">
@@ -50,10 +53,13 @@ export default function HomePage() {
               user={user}
             />
           </Col>
-          <Col className="title-card">
+          <Col className="title-card" style={{ border: "2px solid #11A6A6" }}>
             <h2 style={titleStyle}>Join a Classroom</h2>
             <img src={classRoom} style={imageCenter} />
-            <Form className="classroom-form" style={titleStyle}>
+            <Form
+              className="classroom-form"
+              style={{ ...titleStyle, marginTop: "0" }}
+            >
               {user.accountType !== "guest" ? (
                 <FormGroup>
                   <Form.Label>Teacher's Name</Form.Label>

@@ -7,10 +7,14 @@ export default function OnlineFeed(props) {
   return (
     <Col className="col-2">
       {roomMembers.map((member, id) => (
-        <p key={id}>
+        <p style={{ margin: "0" }} key={id}>
           <img
             src={member.imageUrl}
-            style={{ ...profileIconStyle, marginRight: "1rem" }}
+            style={{
+              ...profileIconStyle,
+              marginTop: "1rem",
+              marginRight: "1rem",
+            }}
           ></img>
           {member.name}
           {findDoneMember && (findDoneMember(member) ? "٭" : "")}
