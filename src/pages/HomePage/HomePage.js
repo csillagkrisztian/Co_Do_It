@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherNames } from "../../store/user/actions";
 import { selectTeacherNames, selectUser } from "../../store/user/selectors";
-import TitleCard from "../../components/HomePageComponents/TitleCard";
+import TitleCard from "./components/TitleCard";
 // Styles
 import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
 import { containerBackground } from "../../style/containerBackground";
@@ -16,6 +16,7 @@ import title from "../../images/title.gif";
 import battleRoom from "../../images/battlePicture.png";
 import practiceRoom from "../../images/practicePicture-export.png";
 import classRoom from "../../images/classroomPicture.png";
+import styles from "./HomePage.module.css";
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");
@@ -31,28 +32,31 @@ export default function HomePage() {
   const allTeachers = useSelector(selectTeacherNames);
   const user = useSelector(selectUser);
 
+  const { titleCard, homepageTitle } = styles;
+
   return (
     <div>
       <Container
         style={{ ...containerBackground, height: "auto" }}
         className="homepage-container"
       >
-        <Row className="homepage-title">
+        <Row className={homepageTitle}>
           <img
             style={{ ...imageCenter, width: "100%", maxWidth: "650px" }}
             src={title}
           ></img>
         </Row>
         <Row className="homepage-title-cards">
-          <Col className="title-card">
+          <Col className={titleCard}>
             <TitleCard
+              title={"Battle With Friends"}
               roomImage={battleRoom}
               buttonText={"Let's go battle"}
               link={"/battle"}
               user={user}
             />
           </Col>
-          <Col className="title-card" style={{ border: "2px solid #11A6A6" }}>
+          <Col className={titleCard}>
             <h2 style={titleStyle}>Join a Classroom</h2>
             <img src={classRoom} style={imageCenter} />
             <Form
@@ -71,7 +75,9 @@ export default function HomePage() {
                   />
                 </FormGroup>
               ) : (
-                <p style={titleStyle}>Log in to use this feature</p>
+                <Link to={"/login"}>
+                  <p style={titleStyle}>Log in to use this feature</p>
+                </Link>
               )}
               {allTeachers.includes(teacher) && (
                 <Link to={`/classroom/${teacher}`}>
@@ -81,8 +87,9 @@ export default function HomePage() {
             </Form>
           </Col>
 
-          <Col className="title-card">
+          <Col className={titleCard}>
             <TitleCard
+              title={"Practice Playground"}
               roomImage={practiceRoom}
               buttonText={"Play Solo"}
               link={"/playground"}
