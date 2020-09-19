@@ -24,7 +24,12 @@ export default function ProfileTemplate({
         <Col>
           <h2>{name}</h2>
           <img
-            style={{ maxWidth: "420px", maxHeight: "420px" }}
+            style={{
+              display: "block",
+              width: "-webkit-fill-available",
+              maxWidth: "420px",
+              maxHeight: "420px",
+            }}
             src={imageUrl}
           ></img>
           <p>account type:{accountType}</p>

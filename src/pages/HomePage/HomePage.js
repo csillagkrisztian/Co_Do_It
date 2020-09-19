@@ -38,7 +38,10 @@ export default function HomePage() {
         className="homepage-container"
       >
         <Row className="homepage-title">
-          <img style={imageCenter} src={title}></img>
+          <img
+            style={{ ...imageCenter, width: "100%", maxWidth: "700px" }}
+            src={title}
+          ></img>
         </Row>
         <Row className="homepage-title-cards">
           <Col className="title-card">
