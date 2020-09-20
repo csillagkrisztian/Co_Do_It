@@ -5,18 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTeacherNames } from "../../store/user/actions";
 import { selectTeacherNames, selectUser } from "../../store/user/selectors";
 import TitleCard from "./components/TitleCard";
+
 // Styles
 import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
-import { containerBackground } from "../../style/containerBackground";
-import { imageCenter } from "../../style/imageCenter";
-import { titleStyle } from "../../style/titleStyle";
+import styles from "./HomePage.module.css";
+import appStyles from "../../App.module.css";
 
 // Images
-import title from "../../images/title.gif";
+import titleImage from "../../images/title.gif";
 import battleRoom from "../../images/battlePicture.png";
 import practiceRoom from "../../images/practicePicture-export.png";
 import classRoom from "../../images/classroomPicture.png";
-import styles from "./HomePage.module.css";
 
 export default function HomePage() {
   const [teacher, setTeacher] = useState("");
@@ -32,24 +31,19 @@ export default function HomePage() {
   const allTeachers = useSelector(selectTeacherNames);
   const user = useSelector(selectUser);
 
-  const { titleCard, homepageTitle } = styles;
+  const { titleCard, homepageTitle, container, image, classRoomForm } = styles;
+  const { imageCenter, title } = appStyles;
 
   return (
     <div>
-      <Container
-        style={{ ...containerBackground, height: "auto" }}
-        className="homepage-container"
-      >
+      <Container className={container}>
         <Row className={homepageTitle}>
-          <img
-            style={{ ...imageCenter, width: "100%", maxWidth: "650px" }}
-            src={title}
-          ></img>
+          <img className={image} src={titleImage}></img>
         </Row>
         <Row className="homepage-title-cards">
           <Col className={titleCard}>
             <TitleCard
-              title={"Battle With Friends"}
+              title={"Battle Friends"}
               roomImage={battleRoom}
               buttonText={"Let's go battle"}
               link={"/battle"}
@@ -57,12 +51,9 @@ export default function HomePage() {
             />
           </Col>
           <Col className={titleCard}>
-            <h2 style={titleStyle}>Join a Classroom</h2>
-            <img src={classRoom} style={imageCenter} />
-            <Form
-              className="classroom-form"
-              style={{ ...titleStyle, marginTop: "0" }}
-            >
+            <h2 className={title}>Join a Classroom</h2>
+            <img src={classRoom} className={imageCenter} />
+            <Form className={classRoomForm}>
               {user.accountType !== "guest" ? (
                 <FormGroup>
                   <Form.Label>Teacher's Name</Form.Label>
@@ -76,7 +67,7 @@ export default function HomePage() {
                 </FormGroup>
               ) : (
                 <Link to={"/login"}>
-                  <p style={titleStyle}>Log in to use this feature</p>
+                  <p className={title}>Log in to use this feature</p>
                 </Link>
               )}
               {allTeachers.includes(teacher) && (
@@ -89,7 +80,7 @@ export default function HomePage() {
 
           <Col className={titleCard}>
             <TitleCard
-              title={"Practice Playground"}
+              title={"Practice Room"}
               roomImage={practiceRoom}
               buttonText={"Play Solo"}
               link={"/playground"}

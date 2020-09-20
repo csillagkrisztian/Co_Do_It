@@ -24,8 +24,9 @@ import {
 import Loading from "../Loading";
 import ClickSuccessButton from "../ClickSuccessButton";
 import { Container, Row, Col } from "react-bootstrap";
-import { titleStyle } from "../../style/titleStyle";
 import buttontest from "../../images/buttontest.png";
+import appStyles from "../../App.module.css";
+import styles from "./CodePlayground.module.css";
 
 export default function CodePlayground(props) {
   const {
@@ -94,6 +95,9 @@ ${code}
     dispatch(exerciseCompleted());
   }
 
+  const { title } = appStyles;
+  const { successMessage, failedMessage } = styles;
+
   return !exercise ? (
     <Loading />
   ) : (
@@ -117,29 +121,11 @@ ${code}
             {messages.length !== 0 &&
               messages.map((m, id) => {
                 return m[0] === "F" ? (
-                  <h6
-                    className="message"
-                    style={{
-                      ...titleStyle,
-                      background: "#B3001B",
-                      color: "#BBDEF0",
-                      margin: "0",
-                    }}
-                    key={id}
-                  >
+                  <h6 className={failedMessage} key={id}>
                     {m}
                   </h6>
                 ) : (
-                  <h6
-                    className="message"
-                    style={{
-                      ...titleStyle,
-                      background: "#00A6A6",
-                      color: "#BBDEF0",
-                      margin: "0",
-                    }}
-                    key={id}
-                  >
+                  <h6 className={successMessage} key={id}>
                     {m}
                   </h6>
                 );
@@ -147,7 +133,7 @@ ${code}
           </div>
           {isDone && (
             <>
-              <h4 style={titleStyle}>
+              <h4 className={title}>
                 Congratulations! You passed all the tests!
               </h4>
               <ClickSuccessButton

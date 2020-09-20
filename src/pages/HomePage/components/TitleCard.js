@@ -6,10 +6,10 @@ import appStyles from "../../../App.module.css";
 export default function TitleCard(props) {
   let authorized = props.authorized;
   const { roomImage, buttonText, link, user, title } = props;
-  const { buttonCenter, imageCenter, titleStyle } = appStyles;
+  const { buttonCenter, imageCenter, title: appTitle } = appStyles;
   return (
     <>
-      <h2 className={titleStyle}>{title}</h2>
+      <h2 className={appTitle}>{title}</h2>
 
       <img src={roomImage} className={imageCenter} alt={"title card"} />
       {authorized ? (
@@ -26,7 +26,7 @@ export default function TitleCard(props) {
         </Link>
       ) : (
         <Link to={"/login"}>
-          <p className={titleStyle}>Log in to use this feature</p>
+          <p className={appTitle}>Log in to use this feature</p>
         </Link>
       )}
     </>

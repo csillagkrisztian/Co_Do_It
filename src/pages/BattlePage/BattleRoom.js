@@ -12,11 +12,10 @@ import {
   setNewExercise,
   resetState,
 } from "../../store/exercise/actions";
-import { profileIconStyle } from "../../style/profileIconStyle";
-import { titleStyle } from "../../style/titleStyle";
+
 import congratulations from "../../images/Congratulations.gif";
 import OnlineFeed from "../../components/ClassroomComponents/OnlineFeed";
-import { imageCenter } from "../../style/imageCenter";
+import appStyles from "../../App.module.css";
 
 let socket;
 
@@ -129,12 +128,14 @@ export default function BattleRoom() {
     };
   }, [user]);
 
+  const { title, imageCenter } = appStyles;
+
   return user.accountType === "guest" ? (
-    <h1 style={titleStyle}>Please log in to Battle</h1>
+    <h1 className={title}>Please log in to Battle</h1>
   ) : roomMembers.length < 2 ? (
-    <h1 style={titleStyle}>Waiting for a challenger</h1>
+    <h1 className={title}>Waiting for a challenger</h1>
   ) : !roomMembers.find((member) => member.name === params.name) ? (
-    <h1 style={titleStyle}>The owner is not in the room!</h1>
+    <h1 className={title}>The owner is not in the room!</h1>
   ) : (
     <Container fluid>
       <Row>
@@ -157,8 +158,8 @@ export default function BattleRoom() {
           )}
           {winner && (
             <div>
-              <h1 style={titleStyle}>{winner.name} is the winner!</h1>
-              <img style={imageCenter} src={congratulations} />
+              <h1 className={title}>{winner.name} is the winner!</h1>
+              <img className={imageCenter} src={congratulations} />
               {params.name === user.name && (
                 <Button
                   onClick={() => {

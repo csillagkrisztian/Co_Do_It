@@ -7,7 +7,7 @@ import { selectToken } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { Col } from "react-bootstrap";
-import { containerBackground } from "../../style/containerBackground";
+import appStyles from "../../App.module.css";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -32,8 +32,10 @@ export default function SignUp() {
     setPassword("");
   }
 
+  const { containerBackground } = appStyles;
+
   return (
-    <Container className="login-container" style={containerBackground}>
+    <Container className={containerBackground}>
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
         <h1 className="mt-5 mb-5">Login</h1>
         <Form.Group controlId="formBasicEmail">

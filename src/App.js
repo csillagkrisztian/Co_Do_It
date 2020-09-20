@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./App.module.css";
 
 import { Switch, Route } from "react-router-dom";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/Navigation/Navigation";
 import Loading from "./components/Loading";
 import MessageBox from "./components/MessageBox";
 import SignUp from "./pages/SignUp/SignUp";

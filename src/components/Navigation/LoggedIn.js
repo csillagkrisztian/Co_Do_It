@@ -6,11 +6,13 @@ import { selectUser } from "../../store/user/selectors";
 import Nav from "react-bootstrap/Nav";
 import NavbarItem from "./NavbarItem";
 import { NavbarBrand } from "react-bootstrap";
-import { profileIconStyle } from "../../style/profileIconStyle";
+import styles from "./LoggedIn.module.css";
 
 export default function LoggedIn() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  const { profileIcon } = styles;
   return (
     <>
       {user.accountType === ("teacher" || "admin") && (
@@ -24,15 +26,7 @@ export default function LoggedIn() {
       <NavbarItem path={"/myprofile"} linkText="My Profile"></NavbarItem>
 
       <NavbarBrand style={{ margin: 0 }}>
-        <img
-          src={user.imageUrl}
-          style={{
-            ...profileIconStyle,
-            display: "block",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        />
+        <img src={user.imageUrl} className={profileIcon} />
       </NavbarBrand>
       <Nav.Item style={{ color: "white", padding: ".5rem 1rem" }}>
         {user.name}

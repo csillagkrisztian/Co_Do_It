@@ -3,16 +3,39 @@
   border: 2px solid #11a6a6;
 }
 
-.homepageContainer {
+.container {
   justify-content: center;
+  height: auto;
+  background: #373f51;
+  color: #00a6a6;
+  border: 5px solid #00a6a6;
+  min-height: 80vh;
 }
 
 .homepageTitle {
   background: #373f51;
 }
 
-.classroomForm {
-  margin-top: 1.1rem;
+.classRoomForm {
   width: 78%;
   margin-bottom: 1.1rem;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 650px;
+}
+
+.title {
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
