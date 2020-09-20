@@ -5,13 +5,13 @@ import appStyles from "../../../App.module.css";
 
 export default function TitleCard(props) {
   let authorized = props.authorized;
-  const { roomImage, buttonText, link, user, title } = props;
+  const { image, buttonText, link, user, title } = props;
   const { buttonCenter, imageCenter, title: appTitle } = appStyles;
   return (
     <>
       <h2 className={appTitle}>{title}</h2>
 
-      <img src={roomImage} className={imageCenter} alt={"title card"} />
+      <img src={image} className={imageCenter} alt={"title card"} />
       {authorized ? (
         <Link to={link}>
           <div className={buttonCenter}>

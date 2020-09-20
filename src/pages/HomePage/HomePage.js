@@ -9,30 +9,18 @@ import TitleCard from "./components/TitleCard";
 // Styles
 import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
 import styles from "./HomePage.module.css";
-import appStyles from "../../App.module.css";
 
 // Images
 import titleImage from "../../images/title.gif";
 import battleRoom from "../../images/battlePicture.png";
 import practiceRoom from "../../images/practicePicture-export.png";
-import classRoom from "../../images/classroomPicture.png";
+import classRoomImage from "../../images/classroomPicture.png";
+import TitleCardWithInput from "./components/TitleCardWithInput";
 
 export default function HomePage() {
-  const [teacher, setTeacher] = useState("");
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getTeacherNames());
-    return () => {
-      setTeacher("");
-    };
-  }, []);
-
-  const allTeachers = useSelector(selectTeacherNames);
   const user = useSelector(selectUser);
 
-  const { titleCard, homepageTitle, container, image, classRoomForm } = styles;
-  const { imageCenter, title } = appStyles;
+  const { titleCard, homepageTitle, container, image } = styles;
 
   return (
     <div>
@@ -44,44 +32,25 @@ export default function HomePage() {
           <Col className={titleCard}>
             <TitleCard
               title={"Battle Friends"}
-              roomImage={battleRoom}
+              image={battleRoom}
               buttonText={"Let's go battle"}
               link={"/battle"}
               user={user}
             />
           </Col>
           <Col className={titleCard}>
-            <h2 className={title}>Join a Classroom</h2>
-            <img src={classRoom} className={imageCenter} />
-            <Form className={classRoomForm}>
-              {user.accountType !== "guest" ? (
-                <FormGroup>
-                  <Form.Label>Teacher's Name</Form.Label>
-                  <Form.Control
-                    value={teacher}
-                    onChange={(event) => setTeacher(event.target.value)}
-                    type="text"
-                    placeholder="Enter name"
-                    required
-                  />
-                </FormGroup>
-              ) : (
-                <Link to={"/login"}>
-                  <p className={title}>Log in to use this feature</p>
-                </Link>
-              )}
-              {allTeachers.includes(teacher) && (
-                <Link to={`/classroom/${teacher}`}>
-                  <Button variant="info">Submit</Button>
-                </Link>
-              )}
-            </Form>
+            <TitleCardWithInput
+              title={"Join a Classroom"}
+              user={user}
+              image={classRoomImage}
+              buttonText={"Join Class"}
+            ></TitleCardWithInput>
           </Col>
 
           <Col className={titleCard}>
             <TitleCard
               title={"Practice Room"}
-              roomImage={practiceRoom}
+              image={practiceRoom}
               buttonText={"Play Solo"}
               link={"/playground"}
               user={user}
