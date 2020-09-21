@@ -16,6 +16,7 @@ import battleRoom from "../../images/battlePicture.png";
 import practiceRoom from "../../images/practicePicture-export.png";
 import classRoomImage from "../../images/classroomPicture.png";
 import TitleCardWithInput from "./components/TitleCardWithInput";
+import Head from "../../components/Head";
 
 export default function HomePage() {
   const user = useSelector(selectUser);
@@ -24,6 +25,7 @@ export default function HomePage() {
 
   return (
     <div>
+      <Head page={"Home"} />
       <Container className={container}>
         <Row className={homepageTitle}>
           <img className={image} src={titleImage}></img>

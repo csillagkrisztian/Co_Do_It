@@ -17,6 +17,7 @@ import OnlineFeed from "../../components/ClassroomComponents/OnlineFeed";
 
 import appStyles from "../../App.module.css";
 import styles from "./Classroom.module.css";
+import Head from "../../components/Head";
 let socket;
 
 export default function Classroom() {
@@ -126,6 +127,7 @@ export default function Classroom() {
     case "teacher": {
       return (
         <Container fluid>
+          <Head page={"Classroom"} />
           <Row className="justify-content-center">
             <h2
               className={appTitle}
@@ -195,6 +197,7 @@ export default function Classroom() {
     case "student": {
       return findDoneMember(userObject) ? (
         <Container>
+          <Head page={"Classroom"} />
           <Row>
             <h1 className={appTitle}>CONGRATULATIONS!</h1>
           </Row>
@@ -240,6 +243,7 @@ export default function Classroom() {
     default: {
       return (
         <Container>
+          <Head page={"Classroom"} />
           <Row>
             <Col>
               <h1 className={title}>Log in to join a classroom</h1>
