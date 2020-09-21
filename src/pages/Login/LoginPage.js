@@ -64,7 +64,7 @@ export default function SignUp() {
             Log in
           </Button>
         </Form.Group>
-        <Link to="/signup" style={{ textAlign: "center" }}>
+        <Link to="/signup" style={{ color: "inherit", textAlign: "center" }}>
           Click here to sign up
         </Link>
       </Form>

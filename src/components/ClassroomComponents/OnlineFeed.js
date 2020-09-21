@@ -7,7 +7,7 @@ export default function OnlineFeed(props) {
   const { profileIcon } = styles;
 
   return (
-    <Col className="col-2">
+    <Col className="col-2 mt-3">
       {roomMembers.map((member, id) => (
         <p style={{ margin: "0" }} key={id}>
           <img src={member.imageUrl} className={profileIcon}></img>

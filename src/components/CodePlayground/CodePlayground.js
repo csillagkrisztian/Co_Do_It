@@ -109,7 +109,7 @@ ${code}
   ) : (
     <Container fluid>
       <Row className="row ">
-        <Col className="col-sm ">
+        <Col className="col-sm">
           <div className={columnDesc}>
             <h3>{exercise.description}</h3>
             <h5>{exercise.explanation}</h5>

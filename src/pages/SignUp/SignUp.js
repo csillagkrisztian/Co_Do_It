@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { Col } from "react-bootstrap";
 
+import styles from "./SignUp.module.css";
 import appStyles from "../../App.module.css";
 
 export default function SignUp() {
@@ -38,7 +39,8 @@ export default function SignUp() {
     setImageUrl("");
   }
 
-  const { containerBackground, imageCenter } = appStyles;
+  const { containerBackground } = appStyles;
+  const { imagePreview, linkColor } = styles;
 
   return (
     <Container className={containerBackground}>
@@ -97,18 +99,16 @@ export default function SignUp() {
             placeholder="url"
             required
           />
-          <img
-            className={imageCenter}
-            className="image-preview"
-            src={imageUrl}
-          />
+          <img className={imagePreview} src={!imageUrl ? null : imageUrl} />
         </Form.Group>
         <Form.Group className="mt-5">
           <Button variant="info" type="submit" onClick={submitForm}>
             Sign up
           </Button>
         </Form.Group>
-        <Link to="/login">Click here to log in</Link>
+        <Link to="/login" className={linkColor}>
+          Click here to log in
+        </Link>
       </Form>
     </Container>
   );
