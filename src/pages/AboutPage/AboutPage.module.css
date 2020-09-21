@@ -1,0 +1,32 @@
+.picture {
+  max-width: 250px;
+  max-height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.text {
+  padding: 10px;
+  margin: 10px;
+  font-family: sans-serif;
+  text-align: center;
+  font-style: italic;
+}
+
+.description {
+  margin-top: 3rem;
+
+  text-align: center;
+}
+
+.footer {
+  margin-top: 6rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.contact {
+  font-family: sans-serif;
+}
