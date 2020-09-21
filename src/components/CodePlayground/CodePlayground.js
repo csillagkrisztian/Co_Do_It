@@ -96,7 +96,13 @@ ${code}
   }
 
   const { title } = appStyles;
-  const { successMessage, failedMessage } = styles;
+  const {
+    successMessage,
+    failedMessage,
+    columnDesc,
+    codeEditor,
+    editorHeader,
+  } = styles;
 
   return !exercise ? (
     <Loading />
@@ -104,7 +110,7 @@ ${code}
     <Container fluid>
       <Row className="row ">
         <Col className="col-sm ">
-          <div className="column-desc">
+          <div className={columnDesc}>
             <h3>{exercise.description}</h3>
             <h5>{exercise.explanation}</h5>
             <div className="example">
@@ -147,8 +153,8 @@ ${code}
           )}
         </Col>
         <Col className="col-sm-7">
-          <div className="code-editor">
-            <div className="editor-header">
+          <div className={codeEditor}>
+            <div className={editorHeader}>
               Given code{" "}
               <select
                 onChange={(e) => {
