@@ -5,8 +5,9 @@ import { useParams } from "react-router-dom";
 import { getUserForProfile } from "../../store/user/actions";
 import { selectUserLookingAt, selectUser } from "../../store/user/selectors";
 import Loading from "../../components/Loading";
+
 import { Container } from "react-bootstrap";
-import { containerBackground } from "../../style/containerBackground";
+import appStyles from "../../App.module.css";
 
 export default function UserProfile() {
   const { id } = useParams();
@@ -17,8 +18,10 @@ export default function UserProfile() {
   const user = useSelector(selectUser);
   const currentUser = useSelector(selectUserLookingAt);
 
+  const { containerBackground } = appStyles;
+
   return currentUser ? (
-    <Container style={containerBackground}>
+    <Container className={containerBackground}>
       <ProfileTemplate
         title={currentUser.title}
         name={currentUser.name}

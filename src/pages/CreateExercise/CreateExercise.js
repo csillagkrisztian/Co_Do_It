@@ -8,17 +8,14 @@ import {
   createExercise,
 } from "../../store/exerciseToBe/actions";
 import { selectTestCases } from "../../store/exerciseToBe/selectors";
-import { titleStyle } from "../../style/titleStyle";
-import { buttonCenter } from "../../style/buttonCenter";
-import { containerBackground } from "../../style/containerBackground";
+import appStyles from "../../App.module.css";
+import styles from "./CreateExercise.module.css";
 
 export default function CreateExercise() {
   const [description, setDescription] = useState("");
   const [explanation, setExplanation] = useState("");
-
   const [inputList, setInputList] = useState([]);
   const [pressedCount, setPressedCount] = useState(2);
-
   const [isPublic, setIsPublic] = useState(false);
 
   const dispatch = useDispatch();
@@ -26,14 +23,16 @@ export default function CreateExercise() {
 
   useEffect(() => {
     dispatch(resetExerciseToBe);
-  }, []);
+  }, [dispatch]);
 
+  const { title, buttonCenter } = appStyles;
+  const { containerBackground, formDescription, formCenter } = styles;
   return (
-    <Container style={{ ...containerBackground, height: "auto" }}>
-      <Row className="justify-content-center">
+    <Container className={containerBackground}>
+      <Row className="justify-content-center" style={{ padding: "10px" }}>
         <Form md={{ span: 5 }} className="mt-5">
-          <h1 style={titleStyle}>Create a new Exercise</h1>
-          <Form.Group style={{ fontFamily: "'Montserrat', sans-serif" }}>
+          <h1 className={title}>Create a new Exercise</h1>
+          <Form.Group className={formDescription}>
             <Form.Group>
               <Form.Label>Description</Form.Label>
               <Form.Control
@@ -57,7 +56,7 @@ export default function CreateExercise() {
               />
             </Form.Group>
 
-            <Form.Label style={{ textAlign: "center" }}>
+            <Form.Label className={formCenter}>
               Do you want to make this exercise public?
             </Form.Label>
             <Form.Control
@@ -69,14 +68,14 @@ export default function CreateExercise() {
             />
             <br></br>
             {isPublic && (
-              <Form.Text style={{ textAlign: "center" }}>
+              <Form.Text className={formCenter}>
                 Thank you for the exercise, you are awesome!
               </Form.Text>
             )}
           </Form.Group>
           <Form.Group>
             {testCases.length >= 2 && description && explanation && (
-              <div style={buttonCenter}>
+              <div className={buttonCenter}>
                 <Button
                   variant="primary"
                   type="submit"
@@ -102,7 +101,7 @@ export default function CreateExercise() {
       </Row>
       <Row>
         <Col>
-          <div style={buttonCenter}>
+          <div className={buttonCenter}>
             <Button
               onClick={() => {
                 setPressedCount(pressedCount + 1);

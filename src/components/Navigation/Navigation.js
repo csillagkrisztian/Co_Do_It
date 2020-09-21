@@ -7,7 +7,7 @@ import { selectToken } from "../../store/user/selectors";
 import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
 import brandLogo from "../../images/brand.png";
-import { iconStyle } from "../../style/iconStyle";
+import appStyles from "../../App.module.css";
 
 export default function Navigation() {
   const token = useSelector(selectToken);
@@ -17,7 +17,7 @@ export default function Navigation() {
   return (
     <Navbar className="color-nav" bg="dark" variant="dark" expand="lg">
       <Navbar.Brand as={NavLink} to="/">
-        <img style={iconStyle} src={brandLogo}></img>
+        <img className={appStyles.listIcon} src={brandLogo}></img>
         Co_Do_It
       </Navbar.Brand>
 

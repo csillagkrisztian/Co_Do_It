@@ -7,8 +7,9 @@ import { selectToken } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { Col } from "react-bootstrap";
-import { imageCenter } from "../../style/imageCenter";
-import { containerBackground } from "../../style/containerBackground";
+
+import styles from "./SignUp.module.css";
+import appStyles from "../../App.module.css";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -38,8 +39,11 @@ export default function SignUp() {
     setImageUrl("");
   }
 
+  const { containerBackground, linkColor } = appStyles;
+  const { imagePreview } = styles;
+
   return (
-    <Container style={containerBackground}>
+    <Container className={containerBackground}>
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
         <h1 className="mt-5 mb-5">Signup</h1>
         <Form.Group controlId="formBasicName">
@@ -95,14 +99,16 @@ export default function SignUp() {
             placeholder="url"
             required
           />
-          <img style={imageCenter} className="image-preview" src={imageUrl} />
+          <img className={imagePreview} src={!imageUrl ? null : imageUrl} />
         </Form.Group>
         <Form.Group className="mt-5">
           <Button variant="info" type="submit" onClick={submitForm}>
             Sign up
           </Button>
         </Form.Group>
-        <Link to="/login">Click here to log in</Link>
+        <Link to="/login" className={linkColor}>
+          Click here to log in
+        </Link>
       </Form>
     </Container>
   );

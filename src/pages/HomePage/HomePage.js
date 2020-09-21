@@ -4,84 +4,53 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherNames } from "../../store/user/actions";
 import { selectTeacherNames, selectUser } from "../../store/user/selectors";
-import TitleCard from "../../components/HomePageComponents/TitleCard";
+import TitleCard from "./components/TitleCard";
+
 // Styles
 import { Container, Row, Col, Form, FormGroup, Button } from "react-bootstrap";
-import { containerBackground } from "../../style/containerBackground";
-import { imageCenter } from "../../style/imageCenter";
-import { titleStyle } from "../../style/titleStyle";
+import styles from "./HomePage.module.css";
 
 // Images
-import title from "../../images/title.gif";
+import titleImage from "../../images/title.gif";
 import battleRoom from "../../images/battlePicture.png";
 import practiceRoom from "../../images/practicePicture-export.png";
-import classRoom from "../../images/classroomPicture.png";
+import classRoomImage from "../../images/classroomPicture.png";
+import TitleCardWithInput from "./components/TitleCardWithInput";
 
 export default function HomePage() {
-  const [teacher, setTeacher] = useState("");
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getTeacherNames());
-    return () => {
-      setTeacher("");
-    };
-  }, []);
-
-  const allTeachers = useSelector(selectTeacherNames);
   const user = useSelector(selectUser);
+
+  const { titleCard, homepageTitle, container, image } = styles;
 
   return (
     <div>
-      <Container
-        style={{ ...containerBackground, height: "auto" }}
-        className="homepage-container"
-      >
-        <Row className="homepage-title">
-          <img style={imageCenter} src={title}></img>
+      <Container className={container}>
+        <Row className={homepageTitle}>
+          <img className={image} src={titleImage}></img>
         </Row>
         <Row className="homepage-title-cards">
-          <Col className="title-card">
+          <Col className={titleCard}>
             <TitleCard
-              title={"Battle With Friends"}
-              roomImage={battleRoom}
+              title={"Battle Friends"}
+              image={battleRoom}
               buttonText={"Let's go battle"}
               link={"/battle"}
               user={user}
             />
           </Col>
-          <Col className="title-card">
-            <h2 style={titleStyle}>Join a Classroom</h2>
-            <img src={classRoom} style={imageCenter} />
-            <Form className="classroom-form" style={titleStyle}>
-              {user.accountType !== "guest" ? (
-                <FormGroup>
-                  <Form.Label>Teacher's Name</Form.Label>
-                  <Form.Control
-                    value={teacher}
-                    onChange={(event) => setTeacher(event.target.value)}
-                    type="text"
-                    placeholder="Enter name"
-                    required
-                  />
-                </FormGroup>
-              ) : (
-                <Link to={"/login"}>
-                  <p style={titleStyle}>Log in to use this feature</p>
-                </Link>
-              )}
-              {allTeachers.includes(teacher) && (
-                <Link to={`/classroom/${teacher}`}>
-                  <Button variant="info">Submit</Button>
-                </Link>
-              )}
-            </Form>
+          <Col className={titleCard}>
+            <TitleCardWithInput
+              title={"Join a Classroom"}
+              user={user}
+              image={classRoomImage}
+              buttonText={"Join Class"}
+            ></TitleCardWithInput>
           </Col>
 
-          <Col className="title-card">
+          <Col className={titleCard}>
             <TitleCard
-              title={"Practice Playground"}
-              roomImage={practiceRoom}
+              title={"Practice Room"}
+              image={practiceRoom}
               buttonText={"Play Solo"}
               link={"/playground"}
               user={user}
