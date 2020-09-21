@@ -21,7 +21,7 @@ export default function TitleCardWithInput(props) {
   const allTeachers = useSelector(selectTeacherNames);
 
   const { user, image, title, buttonText } = props;
-  const { title: titleStyle, imageCenter } = appStyles;
+  const { title: titleStyle, imageCenter, linkColor } = appStyles;
   const { classRoomForm } = homePageStyles;
   return (
     <>
@@ -41,7 +41,7 @@ export default function TitleCardWithInput(props) {
           </FormGroup>
         ) : (
           <Link to={"/login"}>
-            <p className={titleStyle}>Log in to use this feature</p>
+            <p className={linkColor}>Log in to use this feature</p>
           </Link>
         )}
         {allTeachers.includes(teacher) && (

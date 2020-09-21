@@ -47,3 +47,10 @@
   height: 36px;
   margin-right: 10px;
 }
+
+.linkColor {
+  color: #00a6a6;
+  margin-top: 2rem;
+
+  text-align: center;
+}

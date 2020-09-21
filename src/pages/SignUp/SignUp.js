@@ -39,8 +39,8 @@ export default function SignUp() {
     setImageUrl("");
   }
 
-  const { containerBackground } = appStyles;
-  const { imagePreview, linkColor } = styles;
+  const { containerBackground, linkColor } = appStyles;
+  const { imagePreview } = styles;
 
   return (
     <Container className={containerBackground}>
