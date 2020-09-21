@@ -4,12 +4,14 @@ import { Col, Container, Row } from "react-bootstrap";
 import styles from "./AboutPage.module.css";
 import appStyles from "../../App.module.css";
 import profileImage from "../../images/devProfile.png";
+import Head from "../../components/Head";
 
 export default function AboutPage() {
   const { picture, text, description, footer, contact } = styles;
   const { containerBackground, title, linkColor } = appStyles;
   return (
     <Container className={containerBackground}>
+      <Head page={"About"} />
       <Row>
         <Col xs={12} sm={5} lg={4}>
           <img className={picture} src={profileImage}></img>

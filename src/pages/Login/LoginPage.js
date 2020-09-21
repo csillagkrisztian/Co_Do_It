@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { Col } from "react-bootstrap";
 import appStyles from "../../App.module.css";
+import Head from "../../components/Head";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -36,6 +37,7 @@ export default function SignUp() {
 
   return (
     <Container className={containerBackground}>
+      <Head page={"Login"} />
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
         <h1 className="mt-5 mb-5">Login</h1>
         <Form.Group controlId="formBasicEmail">
