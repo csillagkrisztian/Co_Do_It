@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addTestCase } from "../../store/exerciseToBe/actions";
 import { Col } from "react-bootstrap";
-import { titleStyle } from "../../style/titleStyle";
+import styles from "./TestCaseInput.module.css";
 
 export default function TestCaseInput(props) {
   const [given, setGiven] = useState("");
@@ -15,13 +15,10 @@ export default function TestCaseInput(props) {
 
   const dispatch = useDispatch();
 
+  const { title } = styles;
+
   return (
-    <Form
-      as={Col}
-      md={{ span: 5 }}
-      className="mt-5"
-      style={{ ...titleStyle, fontFamily: "'Montserrat', sans-serif" }}
-    >
+    <Form as={Col} md={{ span: 5 }} className={title}>
       <h3>Test case {props.id}</h3>
       <Form.Label>Given Variables</Form.Label>
 

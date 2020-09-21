@@ -1,0 +1,8 @@
+.buttonCenter {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #45f5b1;
+}

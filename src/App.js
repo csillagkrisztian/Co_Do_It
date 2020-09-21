@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import styles from "./App.module.css";
 
 import { Switch, Route } from "react-router-dom";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/Navigation/Navigation";
 import Loading from "./components/Loading";
 import MessageBox from "./components/MessageBox";
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
+import SignUp from "./pages/SignUp/SignUp";
+import Login from "./pages/Login/LoginPage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
@@ -20,6 +20,7 @@ import Battle from "./pages/BattlePage/Battle";
 import BattleRoom from "./pages/BattlePage/BattleRoom";
 import UserProfile from "./pages/UserProfilePage/UserProfile";
 import MyProfile from "./pages/UserProfilePage/MyProfile";
+import About from "./pages/AboutPage/AboutPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/create" component={CreateExercise} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
+        <Route path="/about" component={About} />
       </Switch>
     </div>
   );

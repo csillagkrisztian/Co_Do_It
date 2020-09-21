@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
-import { titleStyle } from "../../style/titleStyle";
+import appStyles from "../../App.module.css";
 
 export default function ProfileTemplate({
   title,
@@ -15,10 +15,12 @@ export default function ProfileTemplate({
   setTitle,
   titleState,
 }) {
+  const { title: titleStyle } = appStyles;
+
   return (
     <Container>
       <Row>
-        <h1 style={titleStyle}>{title}</h1>
+        <h1 className={titleStyle}>{title}</h1>
       </Row>
       <Row>
         <Col>
@@ -39,7 +41,7 @@ export default function ProfileTemplate({
 
         {setTitle && setImageUrl && setAboutMe && (
           <Col>
-            <h2 style={titleStyle}>Your edit page</h2>
+            <h2 className={titleStyle}>Your edit page</h2>
             <div style={{ marginTop: "1rem" }}>
               <label>title:</label>
               <br></br>

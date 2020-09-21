@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
 import ProfileTemplate from "../../components/ProfileTemplate/ProfileTemplate";
 import { Button, Container, Row } from "react-bootstrap";
-import { buttonCenter } from "../../style/buttonCenter";
+
+import appStyles from "../../App.module.css";
 import { updateUserProfile } from "../../store/user/actions";
-import { containerBackground } from "../../style/containerBackground";
 
 export default function MyProfile() {
   const dispatch = useDispatch();
@@ -20,8 +20,10 @@ export default function MyProfile() {
     setTitle(user.title);
   }, [user]);
 
+  const { containerBackground, buttonCenter } = appStyles;
+
   return (
-    <Container style={containerBackground}>
+    <Container className={containerBackground}>
       <Row>
         <ProfileTemplate
           title={user.title}
@@ -37,7 +39,7 @@ export default function MyProfile() {
           titleState={title || ""}
         />
       </Row>
-      <Row style={buttonCenter}>
+      <Row className={buttonCenter}>
         <Button
           className="btn-toolbar"
           onClick={() => {

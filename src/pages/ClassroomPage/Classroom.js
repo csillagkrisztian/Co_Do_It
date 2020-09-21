@@ -12,12 +12,11 @@ import { setNewExercise, resetState } from "../../store/exercise/actions";
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { selectExercise } from "../../store/exercise/selectors";
 import ClassroomTable from "../../components/ClassroomComponents/ClassroomTable";
-import { titleStyle } from "../../style/titleStyle";
-import { profileIconStyle } from "../../style/profileIconStyle";
 import congratulations from "../../images/Congratulations.gif";
-import { imageCenter } from "../../style/imageCenter";
-import { buttonCenter } from "../../style/buttonCenter";
 import OnlineFeed from "../../components/ClassroomComponents/OnlineFeed";
+
+import appStyles from "../../App.module.css";
+import styles from "./Classroom.module.css";
 let socket;
 
 export default function Classroom() {
@@ -118,6 +117,9 @@ export default function Classroom() {
     };
   }, [user]);
 
+  const { title: appTitle, imageCenter, buttonCenter } = appStyles;
+  const { title, profileIcon } = styles;
+
   switch (user.accountType) {
     // if the user is a teacher
 
@@ -126,8 +128,7 @@ export default function Classroom() {
         <Container fluid>
           <Row className="justify-content-center">
             <h2
-              style={titleStyle}
-              className="mt-2"
+              className={appTitle}
             >{`Welcome ${params.name}! Ready to teach?`}</h2>
           </Row>
           <Row>
@@ -145,10 +146,7 @@ export default function Classroom() {
                     }
                   }}
                 >
-                  <img
-                    src={member.imageUrl}
-                    style={{ ...profileIconStyle, marginRight: "1rem" }}
-                  ></img>
+                  <img src={member.imageUrl} className={profileIcon}></img>
                   {member.name}
                   {doneMembers.find((done) => done.name === member.name)
                     ? "٭"
@@ -198,13 +196,13 @@ export default function Classroom() {
       return findDoneMember(userObject) ? (
         <Container>
           <Row>
-            <h1 style={titleStyle}>CONGRATULATIONS!</h1>
+            <h1 className={appTitle}>CONGRATULATIONS!</h1>
           </Row>
           <Row>
-            <h3 style={titleStyle}>You completed the exercise! Way to go!</h3>
+            <h3 className={appTitle}>You completed the exercise! Way to go!</h3>
           </Row>
           <Row>
-            <img style={imageCenter} src={congratulations} />
+            <img className={imageCenter} src={congratulations} />
           </Row>
         </Container>
       ) : (
@@ -219,7 +217,7 @@ export default function Classroom() {
             />
             <Col>
               {!selected ? (
-                <h2 style={titleStyle}>
+                <h2 className={appTitle}>
                   Your teacher is selecting material... Is this what exitement
                   is like?
                 </h2>
@@ -244,24 +242,16 @@ export default function Classroom() {
         <Container>
           <Row>
             <Col>
-              <h1
-                style={{
-                  ...titleStyle,
-                  textAlign: "center",
-                  marginBottom: "4rem",
-                }}
-              >
-                Log in to join a classroom
-              </h1>
+              <h1 className={title}>Log in to join a classroom</h1>
             </Col>
           </Row>
           <Row>
-            <Col style={buttonCenter}>
+            <Col className={buttonCenter}>
               <Link to="/login">
                 <Button className="btn-lg">Login</Button>
               </Link>
             </Col>
-            <Col style={buttonCenter}>
+            <Col className={buttonCenter}>
               <Link to="/signup">
                 <Button className="btn-lg">Sign Up</Button>
               </Link>

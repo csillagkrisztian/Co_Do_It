@@ -1,5 +1,7 @@
-.image-preview {
+.imagePreview {
   width: 126px;
   height: 126px;
   border: 4px solid black;
+  margin: 1rem auto;
+  display: block;
 }

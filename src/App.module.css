@@ -1,6 +1,3 @@
-@import "./components/CodePlayground/CodePlayground.css";
-@import "./pages/SignUp/SignUp.css";
-
 .App {
   background-color: #f08700;
   height: 100%;
@@ -9,4 +6,51 @@
 
 .color-nav {
   background-color: #373f51;
+}
+
+.containerBackground {
+  background: #373f51;
+  color: #00a6a6;
+  border: 5px solid #00a6a6;
+  min-height: 80vh;
+}
+
+.buttonCenter {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.profileIcon {
+  width: 36px;
+  height: 36px;
+  margin-left: 15px;
+}
+
+.imageCenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.listIcon {
+  width: 36px;
+  height: 36px;
+  margin-right: 10px;
+}
+
+.linkColor {
+  color: #00a6a6;
+  margin-top: 2rem;
+
+  text-align: center;
 }
