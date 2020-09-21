@@ -10,6 +10,7 @@ import {
 import { selectTestCases } from "../../store/exerciseToBe/selectors";
 import appStyles from "../../App.module.css";
 import styles from "./CreateExercise.module.css";
+import Head from "../../components/Head";
 
 export default function CreateExercise() {
   const [description, setDescription] = useState("");
@@ -29,6 +30,7 @@ export default function CreateExercise() {
   const { containerBackground, formDescription, formCenter } = styles;
   return (
     <Container className={containerBackground}>
+      <Head page={"Create Exercise"} />
       <Row className="justify-content-center" style={{ padding: "10px" }}>
         <Form md={{ span: 5 }} className="mt-5">
           <h1 className={title}>Create a new Exercise</h1>

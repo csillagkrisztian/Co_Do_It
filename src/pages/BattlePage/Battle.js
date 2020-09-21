@@ -13,6 +13,7 @@ import BattleTitle from "./components/BattleTitle";
 import BattleCreateRoom from "./components/BattleCreateRoom";
 
 import { roomTitle } from "./components/constants";
+import Head from "../../components/Head";
 
 export default function Battle() {
   const [joinInput, setJoinInput] = useState("");
@@ -31,6 +32,7 @@ export default function Battle() {
     <h1 className={title}>Please log in to play battles</h1>
   ) : (
     <Container className={containerBackground}>
+      <Head page={"Battle Room"} />
       <Row>
         <BattleTitle title={roomTitle}></BattleTitle>
       </Row>

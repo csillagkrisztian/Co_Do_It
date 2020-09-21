@@ -10,6 +10,7 @@ import { Col } from "react-bootstrap";
 
 import styles from "./SignUp.module.css";
 import appStyles from "../../App.module.css";
+import Head from "../../components/Head";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -44,6 +45,7 @@ export default function SignUp() {
 
   return (
     <Container className={containerBackground}>
+      <Head page={"Signup"} />
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
         <h1 className="mt-5 mb-5">Signup</h1>
         <Form.Group controlId="formBasicName">

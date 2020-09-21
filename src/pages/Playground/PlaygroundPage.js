@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CodePlayground from "../../components/CodePlayground/CodePlayground";
 import { useDispatch } from "react-redux";
 import { getRandomExercise, resetState } from "../../store/exercise/actions";
+import Head from "../../components/Head";
 
 export default function Playground() {
   const initialState = `// write here 
@@ -13,6 +14,7 @@ export default function Playground() {
   }, [dispatch]);
   return (
     <div>
+      <Head page={"Playground"} />
       <CodePlayground
         initialState={initialState}
         code={code}

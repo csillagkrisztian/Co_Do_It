@@ -16,6 +16,7 @@ import {
 import congratulations from "../../images/Congratulations.gif";
 import OnlineFeed from "../../components/ClassroomComponents/OnlineFeed";
 import appStyles from "../../App.module.css";
+import Head from "../../components/Head";
 
 let socket;
 
@@ -139,6 +140,7 @@ export default function BattleRoom() {
   ) : (
     <Container fluid>
       <Row>
+        <Head page={"Battle Room"} />
         <OnlineFeed roomMembers={roomMembers} />
         <Col>
           {ready &&

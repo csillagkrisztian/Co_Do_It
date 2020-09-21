@@ -8,6 +8,7 @@ import Loading from "../../components/Loading";
 
 import { Container } from "react-bootstrap";
 import appStyles from "../../App.module.css";
+import Head from "../../components/Head";
 
 export default function UserProfile() {
   const { id } = useParams();
@@ -22,6 +23,7 @@ export default function UserProfile() {
 
   return currentUser ? (
     <Container className={containerBackground}>
+      <Head page={`${currentUser.name}'s Profile`} />
       <ProfileTemplate
         title={currentUser.title}
         name={currentUser.name}
